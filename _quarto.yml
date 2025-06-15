@@ -1,0 +1,36 @@
+project:
+  type: book
+  output-dir: docs
+
+book:
+  title: "The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch"
+  author: "Wellington R Monteiro"
+  date: "2025-06-14"
+  
+  chapters:
+    - index.qmd
+    - introdatabricks.qmd
+    - introgit.qmd
+    - introprogramming.qmd
+    - classes.qmd
+    - encapsulation.qmd
+    - errorhandling.qmd
+    - traits.qmd
+    - polymorphism.qmd
+    - spark.qmd
+    - project.qmd
+    - pocketguide.qmd
+    - cheatsheet.qmd
+    - recommendations.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme:
+      cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+

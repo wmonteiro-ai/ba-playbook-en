@@ -1,0 +1,161 @@
+# The Grammar of Programming: Variables, Functions, and Logic
+
+Now that we have our lab (Databricks) and our library for sharing (GitHub), it's time to learn the language we'll be speaking: Scala. Like any language, it has a grammar—a set of rules and building blocks that we combine to express ideas.
+
+Let's learn the absolute fundamentals. Open up your `My First Experiment` notebook in Databricks; it's time to write some real code.
+
+## Storing Information: Variables
+
+To do anything useful, we need to store information (like a customer's name, a product's price, or a sale total). We do this using **variables**.
+
+**Analogy:** Think of a variable as a labeled box where you can store one piece of information.
+
+In Scala, there are two main types of "boxes":
+
+### `val` - The See-Through, Superglued Box
+
+A `val` (short for value) is a constant. Once you put something in this box and seal it, you can never change the contents. You can look at what's inside, but you can't replace it.
+
+```scala
+// Create a 'val' named 'greeting' to hold text
+val greeting = "Hello, Scala!"
+
+// Try to print it
+println(greeting)
+```
+
+If you try to assign something new to `greeting`, Scala will give you an error. This is a *good thing*\!
+
+### `var` - The Standard Cardboard Box
+
+A `var` (short for variable) is a box whose contents you can swap out whenever you want.
+
+```scala
+// Create a 'var' named 'age' to hold a number
+var age = 30
+println(age)
+
+// Now, change the value inside the box
+age = 31
+println(age)
+```
+
+> **Best Practice: Prefer `val` over `var`**
+> In Scala, you should **always** try to use `val` first. This principle is called **immutability**. It makes your code safer and more predictable because you know the value of a `val` can't be changed accidentally somewhere else in your program. Only use a `var` when you have a specific reason that you absolutely must reassign it.
+
+### Common Data Types
+
+Your boxes are designed to hold different types of data:
+
+  * **`String`**: Plain text, like `"Hello, World!"`.
+  * **`Int`**: Integers (whole numbers), like `42`.
+  * **`Double`**: Floating-point numbers (with decimals), like `3.14`.
+  * **`Boolean`**: Can only be `true` or `false`.
+
+## Performing Actions: Functions
+
+A function is a block of code that you can give a name to and reuse.
+
+**Analogy:** A function is like a recipe. You define the steps once, and then you can "cook" that recipe anytime just by calling its name.
+
+```scala
+// A simple function that takes a name (String) and prints a custom greeting
+def sayHello(name: String): Unit = {
+  println(s"Hello, $name! Welcome to Scala.")
+}
+
+// Now, let's call our function (cook the recipe)
+sayHello("Alex")
+sayHello("Maria")
+```
+
+  * `def` is the keyword to define a function.
+  * `(name: String)` defines the input, or **parameter**. This function expects one piece of data: a `String` which it will call `name`.
+  * `: Unit` defines the output. `Unit` is Scala's way of saying "this function doesn't return any value; it just does something."
+
+Let's make a function that *does* return a value:
+
+```scala
+// A function that takes two Integers and returns an Integer
+def add(a: Int, b: Int): Int = {
+  a + b
+}
+
+val sum = add(5, 3)
+println(sum) // This will print 8
+```
+
+Here, `: Int` tells us the function will return an integer value.
+
+## Making Decisions: Logic with `if`/`else`
+
+Your code often needs to make choices. This is done with an `if/else` expression.
+
+**Analogy:** An `if/else` block is a fork in the road for your code.
+
+```scala
+val temperature = 25
+
+if (temperature > 20) {
+  println("It's a warm day!")
+} else {
+  println("It's a bit chilly.")
+}
+```
+
+## Working with Lists of Things: Collections
+
+You'll almost always be working with groups of data, not just single values. A `List` is the most common way to do this.
+
+**Analogy:** A `List` is like a shopping list or a train with many cars, each holding one item.
+
+```scala
+val names = List("Alice", "Bob", "Charlie")
+
+println(names)
+```
+
+## Repeating Tasks: Loops and Functional Mapping
+
+Now, what if we want to do something for *each* item in our list?
+
+### The Classic `for` Loop
+
+A `for` loop iterates over each item and performs an action.
+
+```scala
+val names = List("Alice", "Bob", "Charlie")
+
+for (name <- names) {
+  println(s"Processing member: $name")
+}
+```
+
+### The Scala Way with `.map()`
+
+More often in Scala, you'll want to *transform* a list into a new list. For this, we use the `.map` method.
+
+```scala
+val names = List("Alice", "Bob", "Charlie")
+
+// Create a new list where every name is uppercase
+val upperCaseNames = names.map(name => name.toUpperCase())
+
+println(upperCaseNames) // Will print: List(ALICE, BOB, CHARLIE)
+```
+
+> **Best Practice: `map` for Transformations**
+> Use a `for` loop when you just want to perform an action for each item (like printing). Use `.map()` when you want to create a **new list** based on the old one. The functional style of `.map` is often clearer and more powerful in Scala.
+
+## Summary of What You've Learned
+
+You now have the fundamental grammar to write basic programs\!
+
+  * We store information in variables, preferring `val` (constants) over `var` (variables).
+  * Variables have types like `String`, `Int`, `Double`, and `Boolean`.
+  * We package reusable code into **functions** using `def`.
+  * We make decisions using `if/else` blocks.
+  * We store groups of items in a `List`.
+  * We can repeat actions using `for` loops or transform lists using `.map()`.
+
+With these building blocks, you are ready to start structuring your code in a much more powerful way. In the next unit, we'll learn how to use these concepts to model the real world with Object-Oriented Programming.

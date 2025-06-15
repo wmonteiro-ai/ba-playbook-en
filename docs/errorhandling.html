@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6&nbsp; When Things Go Wrong: Handling Errors the Scala Way – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./traits.html" rel="next">
+<link href="./encapsulation.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./errorhandling.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Business Analyst’s Playbook: Mastering Scala, Git, and Spark from Scratch</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introdatabricks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introgit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introprogramming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./encapsulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./errorhandling.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./traits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Families of Concepts: Inheritance with <code>traits</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./polymorphism.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8: Many Forms, One Action: The Magic of Polymorphism</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pocketguide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./recommendations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-billion-dollar-mistake-the-landmine-of-null" id="toc-the-billion-dollar-mistake-the-landmine-of-null" class="nav-link active" data-scroll-target="#the-billion-dollar-mistake-the-landmine-of-null"><span class="header-section-number">6.1</span> The “Billion-Dollar Mistake”: The Landmine of <code>null</code></a></li>
+  <li><a href="#the-scala-solution-part-1-representing-absence-with-option" id="toc-the-scala-solution-part-1-representing-absence-with-option" class="nav-link" data-scroll-target="#the-scala-solution-part-1-representing-absence-with-option"><span class="header-section-number">6.2</span> The Scala Solution Part 1: Representing Absence with <code>Option</code></a>
+  <ul class="collapse">
+  <li><a href="#the-toolkit-safely-working-with-option" id="toc-the-toolkit-safely-working-with-option" class="nav-link" data-scroll-target="#the-toolkit-safely-working-with-option"><span class="header-section-number">6.2.1</span> The Toolkit: Safely Working with <code>Option</code></a></li>
+  </ul></li>
+  <li><a href="#the-scala-solution-part-2-handling-failure-with-either" id="toc-the-scala-solution-part-2-handling-failure-with-either" class="nav-link" data-scroll-target="#the-scala-solution-part-2-handling-failure-with-either"><span class="header-section-number">6.3</span> The Scala Solution Part 2: Handling Failure with <code>Either</code></a></li>
+  <li><a href="#the-last-resort-handling-catastrophes-with-trycatch" id="toc-the-last-resort-handling-catastrophes-with-trycatch" class="nav-link" data-scroll-target="#the-last-resort-handling-catastrophes-with-trycatch"><span class="header-section-number">6.4</span> The Last Resort: Handling Catastrophes with <code>try/catch</code></a></li>
+  <li><a href="#choosing-your-error-handling-strategy-a-guide" id="toc-choosing-your-error-handling-strategy-a-guide" class="nav-link" data-scroll-target="#choosing-your-error-handling-strategy-a-guide"><span class="header-section-number">6.5</span> Choosing Your Error Handling Strategy: A Guide</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>So far, our code has lived in a “happy path” world, where every operation succeeds and all data is perfectly formed. But reality is messy. Network connections fail, files are missing, user input is invalid, services time out.</p>
+<p><strong>Professional software engineering is largely the art of gracefully handling the “unhappy paths.”</strong> A program that only works when everything is perfect is brittle and untrustworthy. A robust program anticipates failure and handles it with intention and clarity.</p>
+<p>This chapter is your guide to moving error handling from an afterthought to a core part of your design process. In Scala, we don’t just fix errors; we model them as part of our system.</p>
+<section id="the-billion-dollar-mistake-the-landmine-of-null" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-billion-dollar-mistake-the-landmine-of-null"><span class="header-section-number">6.1</span> The “Billion-Dollar Mistake”: The Landmine of <code>null</code></h2>
+<p>In many older languages, the absence of a value is represented by <code>null</code>. Its inventor, Tony Hoare, has famously called it his “billion-dollar mistake” due to the countless bugs, security vulnerabilities, and system crashes it has caused over the decades.</p>
+<ul>
+<li><strong>Analogy: The Hidden Landmine</strong> A <code>null</code> is a landmine because the type system gives you no warning it might be there. A function that promises to return a <code>User</code> (<code>def findUser(...): User</code>) can secretly return a <code>null</code> instead. The contract is broken. Later, when your code confidently tries to use the <code>User</code> object (e.g., <code>user.name</code>), it steps on the <code>null</code> landmine, and your entire program explodes with the infamous <code>NullPointerException</code>.</li>
+</ul>
+<p>The fundamental problem is that <code>null</code> subverts the type system. It’s a value that can sneak into any object reference type, making your code dishonest.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="fu">User</span><span class="op">(</span><span class="kw">val</span> name<span class="op">:</span> <span class="ex">String</span><span class="op">)</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">// A dishonest function. Its signature promises a User, but it can lie.</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">findUser</span><span class="op">(</span>id<span class="op">:</span> <span class="bu">Int</span><span class="op">):</span> User <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>id <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="kw">new</span> <span class="fu">User</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">)</span> <span class="cf">else</span> <span class="kw">null</span> <span class="co">// The lie.</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> user <span class="op">=</span> <span class="fu">findUser</span><span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="co">// We receive the 'null' landmine.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">// println(user.name) // BOOM! NullPointerException. The program crashes.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="the-scala-solution-part-1-representing-absence-with-option" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-scala-solution-part-1-representing-absence-with-option"><span class="header-section-number">6.2</span> The Scala Solution Part 1: Representing Absence with <code>Option</code></h2>
+<p>Scala’s solution is to make the possibility of absence <strong>explicit and honest</strong>, directly in the type system. For this, we use the <code>Option</code> type.</p>
+<ul>
+<li><strong>Analogy: The Transparent Box</strong> An <code>Option</code> is like a transparent, sealed box. You can always see what’s inside. It either contains <strong><code>Some(value)</code></strong> (there is something in the box) or it is <strong><code>None</code></strong> (the box is visibly empty). There are no surprises. A function that returns an <code>Option[User]</code> is making an honest promise: “I will give you a box that <em>might</em> contain a <code>User</code>.” The compiler now knows this and will force you to safely check what’s inside the box before you can use it.</li>
+</ul>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A safe and honest function signature.</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">findUserSafe</span><span class="op">(</span>id<span class="op">:</span> <span class="bu">Int</span><span class="op">):</span> <span class="ex">Option</span><span class="op">[</span>User<span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>id <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="bu">Some</span><span class="op">(</span><span class="kw">new</span> <span class="fu">User</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">))</span> <span class="cf">else</span> <span class="bu">None</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<section id="the-toolkit-safely-working-with-option" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="the-toolkit-safely-working-with-option"><span class="header-section-number">6.2.1</span> The Toolkit: Safely Working with <code>Option</code></h3>
+<p>Because <code>findUserSafe</code> returns an <code>Option</code>, you are forced to handle both the <code>Some</code> and <code>None</code> cases. Here are the primary ways to do it.</p>
+<p><strong>1. The Simplest Way: Providing a Default with <code>.getOrElse()</code></strong> This is perfect when you have a sensible default value if the result is missing.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> userOption <span class="op">=</span> <span class="fu">findUserSafe</span><span class="op">(</span><span class="dv">2</span><span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> user <span class="op">=</span> userOption<span class="op">.</span><span class="fu">getOrElse</span><span class="op">(</span><span class="kw">new</span> <span class="fu">User</span><span class="op">(</span><span class="st">"Guest"</span><span class="op">))</span> <span class="co">// If None, use a Guest user.</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span>user<span class="op">.</span>name<span class="op">)</span> <span class="co">// "Guest" - No crash!</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>2. The Most Powerful Way: Pattern Matching</strong> Pattern matching is a core feature of Scala that lets you deconstruct data types. It’s like a super-powered <code>if/else</code> statement and is the most readable way to handle different cases.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">findUserSafe</span><span class="op">(</span><span class="dv">1</span><span class="op">)</span> <span class="cf">match</span> <span class="op">{</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="bu">Some</span><span class="op">(</span>user<span class="op">)</span> <span class="op">=&gt;</span> <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Pattern match found user: </span><span class="ss">${</span>user<span class="op">.</span>name<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="bu">None</span>       <span class="op">=&gt;</span> <span class="fu">println</span><span class="op">(</span><span class="st">"Pattern match could not find a user."</span><span class="op">)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>3. The Functional Way: Chaining Operations</strong> This is the preferred approach when you want to perform a series of transformations on the value <em>if</em> it exists.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> userId <span class="op">=</span> <span class="dv">2</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> message <span class="op">=</span> <span class="fu">findUserSafe</span><span class="op">(</span>userId<span class="op">)</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span><span class="op">(</span>user <span class="op">=&gt;</span> user<span class="op">.</span>name<span class="op">)</span> <span class="co">// If Some(user), transform it to Some(user.name)</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">map</span><span class="op">(</span>name <span class="op">=&gt;</span> name<span class="op">.</span>toUpperCase<span class="op">)</span> <span class="co">// If Some(name), transform it to Some(NAME)</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">getOrElse</span><span class="op">(</span><span class="ss">s"</span><span class="st">No user found for ID </span><span class="ss">$userId</span><span class="st">.</span><span class="ss">"</span><span class="op">)</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span>message<span class="op">)</span> <span class="co">// "No user found for ID 2."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+</section>
+<section id="the-scala-solution-part-2-handling-failure-with-either" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-scala-solution-part-2-handling-failure-with-either"><span class="header-section-number">6.3</span> The Scala Solution Part 2: Handling Failure with <code>Either</code></h2>
+<p>What happens when <code>None</code> isn’t enough? What if an operation can fail for multiple reasons, and you need to know <em>why</em>? Did we fail to find the user because the ID was invalid, or because the database was down? <code>Option</code> can’t tell us the difference.</p>
+<p>For this, Scala gives us an even more powerful tool: <code>Either[L, R]</code>.</p>
+<ul>
+<li><strong>Analogy: The Fork in the Road</strong> An <code>Either</code> represents a value that can be one of two distinct things. It’s a fork in the road. By convention, the path to the <strong><code>Left</code></strong> represents failure, and the path to the <strong><code>Right</code></strong> represents success. A function returning <code>Either[String, User]</code> makes a very specific promise: “I will give you <em>either</em> a <code>String</code> explaining the error, <em>or</em> a <code>User</code> object representing success.”</li>
+</ul>
+<div class="sourceCode" id="cb6"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">// A function that can fail in multiple ways.</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">findUserWithReason</span><span class="op">(</span>id<span class="op">:</span> <span class="bu">Int</span><span class="op">):</span> Either<span class="op">[</span><span class="ex">String</span><span class="op">,</span> User<span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>id <span class="op">&lt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Left</span><span class="op">(</span><span class="st">"Invalid ID: Must be a positive number."</span><span class="op">)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>id <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Right</span><span class="op">(</span><span class="kw">new</span> <span class="fu">User</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">))</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">Left</span><span class="op">(</span><span class="ss">s"</span><span class="st">User with ID </span><span class="ss">$id</span><span class="st"> not found.</span><span class="ss">"</span><span class="op">)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">// We can handle it with pattern matching, just like an Option.</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="fu">findUserWithReason</span><span class="op">(-</span><span class="dv">5</span><span class="op">)</span> <span class="cf">match</span> <span class="op">{</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">Right</span><span class="op">(</span>user<span class="op">)</span> <span class="op">=&gt;</span> <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Success! User is </span><span class="ss">${</span>user<span class="op">.</span>name<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">Left</span><span class="op">(</span>errorMsg<span class="op">)</span> <span class="op">=&gt;</span> <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Failure: </span><span class="ss">$errorMsg"</span><span class="op">)</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Output: Failure: Invalid ID: Must be a positive number.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><code>Either</code> is incredibly powerful because it lets you pass rich error information back to the caller, allowing for more intelligent error handling.</p>
+</section>
+<section id="the-last-resort-handling-catastrophes-with-trycatch" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="the-last-resort-handling-catastrophes-with-trycatch"><span class="header-section-number">6.4</span> The Last Resort: Handling Catastrophes with <code>try/catch</code></h2>
+<p>So where do traditional <code>try/catch</code> blocks fit in? In modern Scala, they are used for true, unexpected system failures—things that are outside the control of your program’s business logic.</p>
+<ul>
+<li><strong>Analogy: The Fire Alarm</strong> <code>Option</code> and <code>Either</code> are for predictable, everyday problems (a user not found). An <strong>Exception</strong> handled by <code>try/catch</code> is a fire alarm. It’s for catastrophes: the building is on fire (<code>OutOfMemoryError</code>), an earthquake has severed the network cable (<code>IOException</code>), a meteor has hit the data center. It’s not part of the normal flow; it’s an emergency that halts everything.</li>
+</ul>
+<p>In practice, <code>try/catch</code> is often used at the “edges” of your application, for example, when calling a Java library that throws exceptions, or when interacting with a file system.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> scala<span class="op">.</span>io<span class="op">.</span><span class="ex">Source</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> scala<span class="op">.</span>util<span class="op">.{</span>Try<span class="op">,</span> Success<span class="op">,</span> Failure<span class="op">}</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">readFile</span><span class="op">(</span>path<span class="op">:</span> <span class="ex">String</span><span class="op">):</span> Try<span class="op">[</span><span class="ex">String</span><span class="op">]</span> <span class="op">=</span> Try <span class="op">{</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> source <span class="op">=</span> <span class="ex">Source</span><span class="op">.</span><span class="fu">fromFile</span><span class="op">(</span>path<span class="op">)</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">val</span> content <span class="op">=</span> source<span class="op">.</span>mkString</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  source<span class="op">.</span><span class="fu">close</span><span class="op">()</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  content</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="fu">readFile</span><span class="op">(</span><span class="st">"a-file-that-does-not-exist.txt"</span><span class="op">)</span> <span class="cf">match</span> <span class="op">{</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">Success</span><span class="op">(</span>content<span class="op">)</span> <span class="op">=&gt;</span> <span class="fu">println</span><span class="op">(</span><span class="st">"File content:</span><span class="ch">\n</span><span class="st">"</span> <span class="op">+</span> content<span class="op">)</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">case</span> <span class="fu">Failure</span><span class="op">(</span>exception<span class="op">)</span> <span class="op">=&gt;</span> <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">A catastrophic error occurred: </span><span class="ss">${</span>exception<span class="op">.</span>getMessage<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<blockquote class="blockquote">
+<p><strong>Tip:</strong> Scala’s <code>scala.util.Try</code> is a convenient type that is very similar to <code>Either</code>. It’s specifically designed to wrap a computation that might throw an exception. A <code>Success(value)</code> is like a <code>Right</code>, and a <code>Failure(exception)</code> is like a <code>Left</code>. It’s another excellent tool for your error-handling toolkit.</p>
+</blockquote>
+</section>
+<section id="choosing-your-error-handling-strategy-a-guide" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="choosing-your-error-handling-strategy-a-guide"><span class="header-section-number">6.5</span> Choosing Your Error Handling Strategy: A Guide</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Situation</th>
+<th style="text-align: left;">Question to Ask</th>
+<th style="text-align: left;">Recommended Tool</th>
+<th style="text-align: left;">Why</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Optional Value</strong></td>
+<td style="text-align: left;">“Is it normal and expected for this value to sometimes be missing?”</td>
+<td style="text-align: left;"><strong><code>Option[A]</code></strong></td>
+<td style="text-align: left;">It’s the simplest and clearest way to model simple presence/absence.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Recoverable Failure</strong></td>
+<td style="text-align: left;">“Can this operation fail for different reasons, and does the caller need to know <em>why</em>?”</td>
+<td style="text-align: left;"><strong><code>Either[Error, A]</code></strong></td>
+<td style="text-align: left;">It allows you to return rich error information, enabling more intelligent handling.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>System Catastrophe</strong></td>
+<td style="text-align: left;">“Is this an unexpected system-level failure (e.g., network, disk) that I can’t recover from here?”</td>
+<td style="text-align: left;"><strong><code>try/catch</code> or <code>Try[A]</code></strong></td>
+<td style="text-align: left;">It’s the standard mechanism for handling true exceptions that are not part of your business logic.</td>
+</tr>
+</tbody>
+</table>
+<p>By embracing these tools, you move error handling from a runtime gamble to a compile-time certainty. Your function signatures become honest contracts, and your programs become dramatically more robust and reliable.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./encapsulation.html" class="pagination-link" aria-label="Encapsulation: Creating Secure Black Boxes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./traits.html" class="pagination-link" aria-label="Chapter 7: Families of Concepts: Inheritance with `traits`">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Families of Concepts: Inheritance with <code>traits</code></span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

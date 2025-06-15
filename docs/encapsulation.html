@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5&nbsp; Encapsulation: Creating Secure Black Boxes – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./errorhandling.html" rel="next">
+<link href="./classes.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./encapsulation.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Business Analyst’s Playbook: Mastering Scala, Git, and Spark from Scratch</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introdatabricks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introgit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introprogramming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./encapsulation.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./errorhandling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./traits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Families of Concepts: Inheritance with <code>traits</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./polymorphism.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8: Many Forms, One Action: The Magic of Polymorphism</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pocketguide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cheatsheet.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./recommendations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#the-principle-hiding-complexity-exposing-control" id="toc-the-principle-hiding-complexity-exposing-control" class="nav-link active" data-scroll-target="#the-principle-hiding-complexity-exposing-control"><span class="header-section-number">5.1</span> The Principle: Hiding Complexity, Exposing Control</a></li>
+  <li><a href="#hands-on-building-a-truly-secure-bankaccount" id="toc-hands-on-building-a-truly-secure-bankaccount" class="nav-link" data-scroll-target="#hands-on-building-a-truly-secure-bankaccount"><span class="header-section-number">5.2</span> Hands-On: Building a Truly Secure <code>BankAccount</code></a>
+  <ul class="collapse">
+  <li><a href="#part-1-the-insecure-anarchy" id="toc-part-1-the-insecure-anarchy" class="nav-link" data-scroll-target="#part-1-the-insecure-anarchy"><span class="header-section-number">5.2.1</span> Part 1: The Insecure Anarchy</a></li>
+  <li><a href="#part-2-the-secure-black-box-an-idiomatic-scala-approach" id="toc-part-2-the-secure-black-box-an-idiomatic-scala-approach" class="nav-link" data-scroll-target="#part-2-the-secure-black-box-an-idiomatic-scala-approach"><span class="header-section-number">5.2.2</span> Part 2: The Secure Black Box — An Idiomatic Scala Approach</a></li>
+  <li><a href="#part-3-interacting-with-the-secure-object" id="toc-part-3-interacting-with-the-secure-object" class="nav-link" data-scroll-target="#part-3-interacting-with-the-secure-object"><span class="header-section-number">5.2.3</span> Part 3: Interacting with the Secure Object</a></li>
+  </ul></li>
+  <li><a href="#the-strategic-value-why-encapsulation-is-a-superpower" id="toc-the-strategic-value-why-encapsulation-is-a-superpower" class="nav-link" data-scroll-target="#the-strategic-value-why-encapsulation-is-a-superpower"><span class="header-section-number">5.3</span> The Strategic Value: Why Encapsulation is a Superpower</a></li>
+  <li><a href="#final-design-tips" id="toc-final-design-tips" class="nav-link" data-scroll-target="#final-design-tips"><span class="header-section-number">5.4</span> Final Design Tips</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>In the last chapter, we created our first “smart” objects—blueprints that bundle data (state) and actions (behavior) together. This is a huge step up from dealing with disconnected, loose variables.</p>
+<p>But we’ve given the outside world too much power. Our <code>Product</code> object allows anyone to reach in and set its price to <code>-50.00</code>, a nonsensical value. Our objects are currently like cities without laws; anyone can do anything, leading to chaos and corruption. An object with invalid data is a ticking time bomb in our application.</p>
+<p>To build reliable systems, we need to enforce rules. We need to guarantee that our objects can never be put into a broken or invalid state. This brings us to the first major pillar of Object-Oriented Programming: <strong>Encapsulation</strong>.</p>
+<section id="the-principle-hiding-complexity-exposing-control" class="level2" data-number="5.1">
+<h2 data-number="5.1" class="anchored" data-anchor-id="the-principle-hiding-complexity-exposing-control"><span class="header-section-number">5.1</span> The Principle: Hiding Complexity, Exposing Control</h2>
+<p>Encapsulation is the practice of bundling an object’s data and methods together while deliberately hiding the internal complexity. You expose only a limited, safe, and well-defined set of controls to the outside world.</p>
+<ul>
+<li><strong>Analogy 1: The Car Dashboard</strong> Think about the dashboard of a modern car. It provides a simple <strong>interface</strong> to an incredibly complex machine. You have a speedometer, a fuel gauge, a steering wheel, and a couple of pedals. These are your public controls. You don’t have direct access to the fuel injection timing, the engine’s RPM sensors, or the raw voltage of the battery. That complexity is hidden (encapsulated) from you. This design has two huge benefits:
+<ol type="1">
+<li><strong>It protects you:</strong> It’s simple to use. You can’t accidentally break the engine by “using the dashboard wrong.”</li>
+<li><strong>It protects the engine:</strong> The car’s internal computer can prevent you from doing something dangerous, like trying to shift into reverse while driving at high speed. The internal logic enforces the rules.</li>
+</ol></li>
+<li><strong>Analogy 2: The Restaurant Kitchen</strong> A restaurant menu is another perfect example of an interface.
+<ul>
+<li>The <strong>public interface</strong> is the <strong>menu</strong>. It lists the dishes you can order (<code>deposit</code>, <code>withdraw</code>).</li>
+<li>The <strong>private implementation</strong> is the <strong>chaotic, secret, and complex kitchen</strong>. It contains the raw ingredients (<code>private var balance</code>), the secret recipes, and the specific cooking techniques.</li>
+</ul>
+As a customer, you don’t need to know how the sauce is made. You just order “Spaghetti” from the menu and trust you will get a consistent and delicious result. The restaurant can change its kitchen staff, its suppliers, or even its cooking methods, but as long as the dish on the menu remains the same, your experience as a customer is unaffected. Encapsulation allows the internal implementation to change without breaking the code that uses it.</li>
+</ul>
+</section>
+<section id="hands-on-building-a-truly-secure-bankaccount" class="level2" data-number="5.2">
+<h2 data-number="5.2" class="anchored" data-anchor-id="hands-on-building-a-truly-secure-bankaccount"><span class="header-section-number">5.2</span> Hands-On: Building a Truly Secure <code>BankAccount</code></h2>
+<p>The <code>BankAccount</code> is the classic example for a reason: it perfectly illustrates the need to protect data and enforce rules. Let’s build a richer, more realistic, and more idiomatic Scala version.</p>
+<section id="part-1-the-insecure-anarchy" class="level3" data-number="5.2.1">
+<h3 data-number="5.2.1" class="anchored" data-anchor-id="part-1-the-insecure-anarchy"><span class="header-section-number">5.2.1</span> Part 1: The Insecure Anarchy</h3>
+<p>First, the “before” picture. This class has no laws.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> InsecureBankAccount <span class="op">{</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> balance<span class="op">:</span> <span class="ex">Double</span> <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  <span class="kw">var</span> owner<span class="op">:</span> <span class="ex">String</span> <span class="op">=</span> <span class="st">""</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> myAccount <span class="op">=</span> <span class="kw">new</span> <span class="fu">InsecureBankAccount</span><span class="op">()</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>myAccount<span class="op">.</span>owner <span class="op">=</span> <span class="st">"Alice"</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>myAccount<span class="op">.</span>balance <span class="op">=</span> <span class="fl">100.00</span> <span class="co">// So far, so good.</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">// But now, chaos can strike...</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>myAccount<span class="op">.</span>balance <span class="op">=</span> <span class="op">-</span><span class="fl">9999.00</span> <span class="co">// The bank is now paying Alice to have an account?</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>myAccount<span class="op">.</span>owner <span class="op">=</span> <span class="st">""</span> <span class="co">// The account now has no owner.</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Owner: '</span><span class="ss">${</span>myAccount<span class="op">.</span>owner<span class="ss">}</span><span class="st">', Balance: </span><span class="ch">$$</span><span class="ss">${</span>myAccount<span class="op">.</span>balance<span class="ss">}"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This is a disaster waiting to happen. The object cannot protect its own state, making it completely unreliable.</p>
+</section>
+<section id="part-2-the-secure-black-box-an-idiomatic-scala-approach" class="level3" data-number="5.2.2">
+<h3 data-number="5.2.2" class="anchored" data-anchor-id="part-2-the-secure-black-box-an-idiomatic-scala-approach"><span class="header-section-number">5.2.2</span> Part 2: The Secure Black Box — An Idiomatic Scala Approach</h3>
+<p>Let’s fix this by hiding the internal data and exposing only safe, public methods. We’ll use some common Scala conventions.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> scala<span class="op">.</span>collection<span class="op">.</span>mutable<span class="op">.</span><span class="bu">ListBuffer</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> <span class="fu">BankAccount</span><span class="op">(</span><span class="kw">val</span> accountId<span class="op">:</span> <span class="ex">String</span><span class="op">,</span> <span class="kw">val</span> owner<span class="op">:</span> <span class="ex">String</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 1. The internal state. We use a '_' prefix as a common convention</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="co">//    for a private field that has a public accessor. This is PRIVATE.</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">private</span> <span class="kw">var</span> _balance<span class="op">:</span> <span class="ex">Double</span> <span class="op">=</span> <span class="fl">0.0</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="kw">private</span> <span class="kw">val</span> _transactionHistory<span class="op">:</span> <span class="bu">ListBuffer</span><span class="op">[</span><span class="ex">String</span><span class="op">]</span> <span class="op">=</span> <span class="bu">ListBuffer</span><span class="op">()</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 2. A PUBLIC "getter" method. In Scala, it's idiomatic to define</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="co">//    methods that access state without parentheses. This lets callers</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co">//    write 'myAccount.balance', which looks like field access but is</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="co">//    actually calling our safe, public method.</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> balance<span class="op">:</span> <span class="ex">Double</span> <span class="op">=</span> _balance</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> transactionHistory<span class="op">:</span> <span class="ex">List</span><span class="op">[</span><span class="ex">String</span><span class="op">]</span> <span class="op">=</span> _transactionHistory<span class="op">.</span>toList <span class="co">// Return an immutable copy</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 3. A public method (a "command") to safely modify state.</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">deposit</span><span class="op">(</span>amount<span class="op">:</span> <span class="ex">Double</span><span class="op">):</span> <span class="bu">Unit</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>amount <span class="op">&gt;</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>      _balance <span class="op">+=</span> amount <span class="co">// same as _balance = _balance + amount</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>      _transactionHistory <span class="op">+=</span> <span class="ss">s"</span><span class="st">Deposited </span><span class="ch">$$</span><span class="ss">${</span>amount<span class="ss">}"</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>      <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Deposit successful. New balance is </span><span class="ch">$$</span><span class="ss">${</span>_balance<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>      <span class="fu">println</span><span class="op">(</span><span class="st">"Error: Deposit amount must be positive."</span><span class="op">)</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="co">// 4. Another public command with more complex validation logic.</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="kw">def</span> <span class="fu">withdraw</span><span class="op">(</span>amount<span class="op">:</span> <span class="ex">Double</span><span class="op">):</span> <span class="bu">Unit</span> <span class="op">=</span> <span class="op">{</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="op">(</span>amount <span class="op">&lt;=</span> <span class="dv">0</span><span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>      <span class="fu">println</span><span class="op">(</span><span class="st">"Error: Withdrawal amount must be positive."</span><span class="op">)</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="cf">if</span> <span class="op">(</span>amount <span class="op">&gt;</span> _balance<span class="op">)</span> <span class="op">{</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>      <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Error: Insufficient funds. Cannot withdraw </span><span class="ch">$$</span><span class="ss">${</span>amount<span class="ss">}</span><span class="st"> from balance of </span><span class="ch">$$</span><span class="ss">${</span>_balance<span class="ss">}</span><span class="st">.</span><span class="ss">"</span><span class="op">)</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span> <span class="cf">else</span> <span class="op">{</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>      _balance <span class="op">-=</span> amount</span>
+<span id="cb2-36"><a href="#cb2-36" aria-hidden="true" tabindex="-1"></a>      _transactionHistory <span class="op">+=</span> <span class="ss">s"</span><span class="st">Withdrew </span><span class="ch">$$</span><span class="ss">${</span>amount<span class="ss">}"</span></span>
+<span id="cb2-37"><a href="#cb2-37" aria-hidden="true" tabindex="-1"></a>      <span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Withdrawal successful. New balance is </span><span class="ch">$$</span><span class="ss">${</span>_balance<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb2-38"><a href="#cb2-38" aria-hidden="true" tabindex="-1"></a>    <span class="op">}</span></span>
+<span id="cb2-39"><a href="#cb2-39" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
+<span id="cb2-40"><a href="#cb2-40" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="part-3-interacting-with-the-secure-object" class="level3" data-number="5.2.3">
+<h3 data-number="5.2.3" class="anchored" data-anchor-id="part-3-interacting-with-the-secure-object"><span class="header-section-number">5.2.3</span> Part 3: Interacting with the Secure Object</h3>
+<p>Now, let’s use our new, robust <code>BankAccount</code>. Notice how we, as the user of the class, can only interact with it through the simple, safe methods provided.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> secureAccount <span class="op">=</span> <span class="kw">new</span> <span class="fu">BankAccount</span><span class="op">(</span><span class="st">"ACC123"</span><span class="op">,</span> <span class="st">"Bob"</span><span class="op">)</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Account created for </span><span class="ss">${</span>secureAccount<span class="op">.</span>owner<span class="ss">}</span><span class="st"> with ID </span><span class="ss">${</span>secureAccount<span class="op">.</span>accountId<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">// Let's try to do bad things...</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">// secureAccount._balance = -5000.00 // ERROR! This line won't compile. '_balance' is private.</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">// Let's use the public interface (the "menu")</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>secureAccount<span class="op">.</span><span class="fu">deposit</span><span class="op">(</span><span class="fl">200.00</span><span class="op">)</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>secureAccount<span class="op">.</span><span class="fu">deposit</span><span class="op">(-</span><span class="fl">50.00</span><span class="op">)</span> <span class="co">// Our validation logic kicks in!</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>secureAccount<span class="op">.</span><span class="fu">withdraw</span><span class="op">(</span><span class="fl">75.00</span><span class="op">)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>secureAccount<span class="op">.</span><span class="fu">withdraw</span><span class="op">(</span><span class="fl">500.00</span><span class="op">)</span> <span class="co">// Our validation logic kicks in!</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co">// We can safely read the state using our public accessors</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="ss">s"</span><span class="st">Final balance for </span><span class="ss">${</span>secureAccount<span class="op">.</span>owner<span class="ss">}</span><span class="st"> is </span><span class="ch">$$</span><span class="ss">${</span>secureAccount<span class="op">.</span>balance<span class="ss">}"</span><span class="op">)</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="st">"</span><span class="ch">\n</span><span class="st">--- Transaction History ---"</span><span class="op">)</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>secureAccount<span class="op">.</span>transactionHistory<span class="op">.</span><span class="fu">foreach</span><span class="op">(</span>println<span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>Our object now protects itself. It is responsible for maintaining its own integrity. We have successfully enforced our business rules (invariants), such as “the balance can never be negative” and “a deposit amount must be positive.”</p>
+</section>
+</section>
+<section id="the-strategic-value-why-encapsulation-is-a-superpower" class="level2" data-number="5.3">
+<h2 data-number="5.3" class="anchored" data-anchor-id="the-strategic-value-why-encapsulation-is-a-superpower"><span class="header-section-number">5.3</span> The Strategic Value: Why Encapsulation is a Superpower</h2>
+<p>Encapsulation is more than just a defensive mechanism; it’s a core strategy for building large, maintainable software.</p>
+<ul>
+<li><p><strong>Benefit 1: Maintainability &amp; Flexibility</strong> Because we’ve separated the public interface (the menu) from the private implementation (the kitchen), we are now free to change the implementation without breaking anyone’s code. For example, we could decide to add logging to every deposit without changing the <code>deposit</code> method’s signature. The user of our class is unaffected, but our internal logic has improved.</p></li>
+<li><p><strong>Benefit 2: Reduced Complexity (Abstraction)</strong> As a user of the <code>BankAccount</code> class, you don’t need to know or care about how it stores the transaction history or what logic it runs for withdrawals. You can treat it as a reliable “black box.” When you build systems out of many such black boxes, you can manage far greater complexity because you only have to think about one small part at a time.</p></li>
+<li><p><strong>Benefit 3: Enforcing Invariants</strong> An <strong>invariant</strong> is a rule or condition that must <em>always</em> be true for an object throughout its life. For our <code>BankAccount</code>, an invariant is that <code>balance</code> must never be negative. Encapsulation is the primary tool we use to protect an object’s invariants, ensuring the object is always in a valid, consistent state.</p></li>
+</ul>
+</section>
+<section id="final-design-tips" class="level2" data-number="5.4">
+<h2 data-number="5.4" class="anchored" data-anchor-id="final-design-tips"><span class="header-section-number">5.4</span> Final Design Tips</h2>
+<ul>
+<li><strong>Default to <code>private</code>.</strong> When adding a new field to a class, make it <code>private</code> first. You can always decide to expose it later through a public method if needed. It’s much easier to loosen security than to tighten it after the fact.</li>
+<li><strong>Be Wary of Public “Setters.”</strong> Be very cautious about creating public methods that allow the outside world to freely change your object’s internal state (e.g., <code>def setBalance(newBalance: Double)</code>). Always ask: does the outside world need this level of direct control, or should they be calling a more descriptive method like <code>applyInterest()</code> or <code>correctTransaction()</code>?</li>
+<li><strong>Immutability is the Strongest Encapsulation.</strong> An object whose state can never change after it’s created is called <strong>immutable</strong>. If all the fields in our <code>BankAccount</code> were <code>val</code>s and no methods modified them, it would be perfectly safe and encapsulated by design. In functional programming, this is the preferred approach.</li>
+</ul>
+<p>You have now learned how to create objects that are not just containers for data, but are responsible, secure, and robust guardians of their own state. This is a massive leap in your journey as a software craftsperson.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./classes.html" class="pagination-link" aria-label="From Business Process to Class: A New Way of Thinking">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./errorhandling.html" class="pagination-link" aria-label="When Things Go Wrong: Handling Errors the Scala Way">
+        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

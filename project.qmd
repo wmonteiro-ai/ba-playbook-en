@@ -1,0 +1,178 @@
+# Final Project: A Data Analyst's First Day
+
+This is it. You've learned the grammar of Scala, the art of modeling with classes and traits, and the immense power of Apache Spark. Now, it's time to put it all together. This isn't just another exercise; this is a simulation of your first big task as a newly hired Data Analyst at the online retailer, "Sparkly Goods."
+
+## The Scenario: Your First Assignment
+
+It's your first day. The Head of Marketing comes to your desk with a crucial business problem. "Welcome to the team!" she says. "We have a lot of raw sales data, but we're flying blind. We need to understand our customers and products better. For your first project, I need you to answer two critical questions:
+
+1.  **Who are our top 10 highest-spending customers by name?** We want to create a loyalty program for them.
+2.  **Which product categories generate the most revenue?** This will help our inventory team decide where to invest."
+
+To answer these questions, you'll need to combine data from three different sources: sales transactions, customer information, and product details. This is your chance to shine by using all the skills you've acquired. Let's begin.
+
+## Step 1: Modeling Our Business World
+
+Before we touch any data, a good analyst first builds a mental model of the business domain. We will translate that model into code using Scala's powerful `case class`es. This gives our raw data structure, meaning, and safety.
+
+We need to model three core concepts: `Customer`, `Product`, and `Sale`.
+
+```scala
+import java.sql.{Date, Timestamp}
+
+// A blueprint for our customer data.
+// We'll use java.sql.Date for dates without time.
+case class Customer(
+  customer_id: Int,
+  customer_name: String,
+  email: String,
+  signup_date: Date
+)
+
+// A blueprint for our product catalog.
+case class Product(
+  product_id: Int,
+  product_name: String,
+  category: String,
+  unit_price: Double
+)
+
+// A blueprint for a single transaction.
+// A sale connects a customer and a product.
+// We'll use java.sql.Timestamp to capture the exact moment of the sale.
+case class Sale(
+  sale_id: String,
+  customer_id: Int,
+  product_id: Int,
+  quantity: Int,
+  sale_timestamp: Timestamp
+)
+```
+
+> **Context:** By defining these `case class`es upfront, we are creating a "schema" for our business. This is like an architect designing the rooms of a house before construction begins. It's a foundational step for writing clear and robust data applications.
+
+## Step 2: Gathering the Raw Materials
+
+In a real-world scenario, this data would live in a data lake and be stored in formats like CSV or Parquet. We'll simulate loading three separate CSV files into Spark DataFrames.
+
+```scala
+import spark.implicits._
+
+// --- Simulating the loading of customers.csv ---
+val customersRawDf = Seq(
+  (101, "Alice Johnson", "alice@example.com", "2024-01-15"),
+  (102, "Bob Williams", "bob@example.com", "2024-02-20"),
+  (103, "Charlie Brown", "charlie@example.com", "2024-03-05")
+).toDF("customer_id", "customer_name", "email", "signup_date")
+ .withColumn("signup_date", $"signup_date".cast("date")) // Casting string to a proper Date type
+
+// --- Simulating the loading of products.csv ---
+val productsRawDf = Seq(
+  (1, "Scala Handbook", "Books", 29.99),
+  (2, "Spark Mug", "Kitchenware", 12.50),
+  (3, "Data T-Shirt", "Apparel", 24.00)
+).toDF("product_id", "product_name", "category", "unit_price")
+
+// --- Simulating the loading of sales.csv ---
+val salesRawDf = Seq(
+  ("s1", 101, 1, 2, "2025-06-10 10:00:00"),
+  ("s2", 102, 3, 1, "2025-06-11 11:30:00"),
+  ("s3", 101, 2, 5, "2025-06-12 14:00:00"),
+  ("s4", 103, 1, 1, "2025-06-13 09:00:00"),
+  ("s5", 101, 3, 1, "2025-06-14 16:00:00")
+).toDF("sale_id", "customer_id", "product_id", "quantity", "sale_timestamp")
+ .withColumn("sale_timestamp", $"sale_timestamp".cast("timestamp")) // Casting string to Timestamp
+
+```
+> **Tip: Always Check Your Schema!**
+> The very first thing a data analyst does after loading data is inspect its structure using `printSchema()`. This tells you the column names and the data types Spark inferred. It's an essential debugging step.
+> ```scala
+> customersRawDf.printSchema()
+> productsRawDf.printSchema()
+> salesRawDf.printSchema()
+> ```
+
+## Step 3: From Raw Data to a Rich, Type-Safe Model
+
+Now we perform the magic step that connects our OOP models with Spark's raw data. We convert our generic `DataFrame`s into strongly-typed `Dataset`s. This gives us "compiler-time safety"—if we misspell a field name later, our code won't even compile, saving us from runtime errors.
+
+```scala
+val customersDs = customersRawDf.as[Customer]
+val productsDs = productsRawDf.as[Product]
+val salesDs = salesRawDf.as[Sale]
+```
+Our data is now loaded, structured, and safe. We are ready to answer the business questions.
+
+## Step 4: Answering Business Questions by Combining Data
+
+This is where data analysis truly happens: by enriching and combining different datasets to uncover insights.
+
+### **Business Question 1: "Who are our top 10 highest-spending customers?"**
+
+To answer this, we need to connect sales to products (to get the price) and then to customers (to get their names).
+
+```scala
+// Step 4a: Calculate the revenue for each individual sale
+val salesWithRevenueDf = salesDs
+  .join(productsDs, salesDs("product_id") === productsDs("product_id")) // Join sales and products
+  .withColumn("total_price", $"quantity" * $"unit_price") // Calculate the total price for the transaction
+
+println("Enriched sales data with total price per transaction:")
+salesWithRevenueDf.select("sale_id", "product_name", "quantity", "unit_price", "total_price").show()
+
+// Step 4b: Aggregate revenue by customer and join to get customer names
+val customerSpendingDf = salesWithRevenueDf
+  .groupBy("customer_id") // Group all transactions by customer
+  .sum("total_price") // For each customer, sum up the total_price
+  .withColumnRenamed("sum(total_price)", "total_spent") // Rename the aggregated column for clarity
+  .join(customersDs, "customer_id") // Join with the customer dataset to get names
+  .select("customer_name", "total_spent") // Select only the final columns we need
+  .orderBy($"total_spent".desc) // Sort to find the top spenders
+
+println("Final Customer Spending Report:")
+customerSpendingDf.show(10) // Show the top 10
+```
+
+### **Business Question 2: "Which product categories generate the most revenue?"**
+
+We can reuse our `salesWithRevenueDf` from the previous question. This is a common and efficient practice.
+
+```scala
+val categoryRevenueDf = salesWithRevenueDf
+  .groupBy("category") // This time, group by the product category
+  .sum("total_price") // Sum up the revenue for each category
+  .withColumnRenamed("sum(total_price)", "total_revenue")
+  .orderBy($"total_revenue".desc)
+
+println("Product Category Revenue Report:")
+categoryRevenueDf.show()
+```
+
+## Step 5: Visualizing for a Business Audience
+
+An analyst's job isn't done until the insights are communicated clearly. A table of numbers is good, but a chart is often better. In Databricks, we can use the `display()` command to create interactive visualizations.
+
+```scala
+// Use display() to get a richer, interactive output
+display(categoryRevenueDf)
+```
+> **Actionable Tip:**
+> When you run the `display()` command in a Databricks notebook, a rich table will appear. Below the table, click the **"Plot"** icon (which looks like a bar chart).
+> 1. In the plot options, you can drag and drop fields.
+> 2. Drag the `category` column to the "Keys" box.
+> 3. Drag the `total_revenue` column to the "Values" box.
+> 4. Choose the bar chart display type.
+> You have just created a presentation-ready chart to show the marketing team, directly from your analysis results!
+
+## Project Debrief: Connecting Our Work to Our Principles
+
+Let's step back and reflect. We didn't just run some commands; we completed a professional workflow that successfully leveraged every concept from this book.
+
+* **We started with OOP:** By creating `case class`es, we built a robust, type-safe model of our business domain. This made our subsequent code far easier to read and less prone to errors.
+* **We used Spark for large-scale processing:** We performed powerful `join` and `groupBy` operations that would work efficiently even on billions of rows, thanks to Spark's distributed engine.
+* **We wrote Clean Code:** Our analysis was a declarative, chained series of transformations, making the logic clear and readable from top to bottom.
+* **We focused on business value:** We didn't just manipulate data; we answered specific, important questions from our stakeholders and prepared the results for presentation.
+
+You have successfully completed your first day as a Data Analyst at "Sparkly Goods." You took raw data from multiple sources, combined it, and extracted valuable, actionable insights. This entire project is a blueprint you can adapt and reuse for countless data challenges in your career.
+
+Congratulations!

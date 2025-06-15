@@ -1,0 +1,137 @@
+# A Scala & Spark Cheat Sheet
+
+Hello! Welcome to your new quick-reference guide. As you progress on your journey, you will repeatedly encounter certain keywords, patterns, and concepts. Knowing the subtle differences between them and when to use each is what elevates a beginner to an effective professional.
+
+This chapter is not meant to be read cover-to-cover. It is a **cheat sheet**—a reference guide to return to whenever you ask yourself, "Should I use a `val` or a `var` here? What's the real difference between `map` and `flatMap`? When is `lit()` actually necessary?"
+
+Let's dive into the distinctions that matter most.
+
+---
+
+## **Section 1: Core Scala Language Fundamentals**
+
+This section covers the absolute building blocks of the Scala language itself.
+
+### **Reference Table: `val` vs. `var`**
+
+| Feature | `val` (Value/Constant) | `var` (Variable) |
+| :--- | :--- | :--- |
+| **Definition** | An immutable reference. Once assigned, it can **never** be reassigned. | A mutable reference. It can be reassigned to new values. |
+| **Analogy** | A person's date of birth. It's fixed. | A person's home address. It can change over time. |
+| **When to Use** | **Almost always.** This should be your default choice. It leads to safer, more predictable code, which is critical in parallel systems like Spark. | **Only when mutability is strictly required.** Examples include counters in loops or when an object's state must be explicitly changed over its lifecycle. |
+| **When NOT to Use**| When you genuinely need a value that will be updated multiple times. | For most of your code. If you can rewrite your logic to use a `val` (e.g., by creating a new value from an old one), you should. |
+| **DO ✅** | `val pi = 3.14` | `var loopCounter = 0; loopCounter += 1` |
+| **DON'T ❌** | `val x = 5; x = 10` (Will not compile) | `var pi = 3.14` (Semantically wrong and misleading) |
+
+> **Pro Tip:** Immutability is one of the most important concepts in modern programming. Adopt a **"`val`-first" mindset.** Using `val` by default makes your code easier to reason about because you know values won't change unexpectedly under your feet.
+
+---
+
+## **Section 2: Scala Collections: The Right Tool for the Job**
+
+How you store and manipulate groups of data is fundamental. Choosing the right collection type can have a big impact on performance and clarity.
+
+### **Reference Table: `List` vs. `Vector` vs. `Seq` vs. `Set` vs. `Map`**
+
+| Feature | `List` | `Vector` | `Seq` (Sequence) | `Set` | `Map` |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Definition** | An immutable linear collection (a linked list). | An immutable indexed collection (a data tree). | A `trait` (contract) representing any ordered collection. `List` and `Vector` are types of `Seq`. | An **unordered** collection of **unique** items. | A collection of **key-value** pairs. |
+| **Performance**| **Fast** for adding/removing at the head. **Slow** for random access (`myList(1000)`). | **Fast for everything:** random access, adding/removing at the head or tail. Well-balanced. | N/A (it's the contract, not the implementation). | Fast for checking if an item exists (`contains`). | Fast for looking up a value by its key. |
+| **When to Use** | For classic "head/tail" recursion algorithms. | **Your default, general-purpose `Seq`.** If you are unsure which sequence to use, start with `Vector`. | When your function needs to accept *any* kind of sequence (`List`, `Vector`, etc.). | When you need to store a collection of unique items and quickly check for membership. | Whenever you need to associate keys with values, like a dictionary or lookup table. |
+| **DO ✅** | `val names: List[String] = List("a", "b")` | `val names: Vector[Int] = Vector(1, 2)` | `def process(s: Seq[Int])` | `val uniqueIds: Set[Int] = Set(1, 2, 2, 3)` (becomes `Set(1,2,3)`) | `val capitals: Map[String, String] = Map("USA" -> "D.C.")`|
+
+### **Reference Table: `map` vs. `flatMap` vs. `foreach`**
+
+| Feature | `map` | `flatMap` | `foreach` |
+| :--- | :--- | :--- | :--- |
+| **Definition** | Transforms each element of a collection 1-to-1, returning a **new collection** of the same size. | Transforms each element into a collection, then "flattens" all the resulting collections into a **single new collection**. | Executes an action for each element but **returns nothing** (`Unit`). Used for side effects. |
+| **Analogy** | Giving each person in a room a hat. You start with 10 people, you end with 10 hats. | Asking each person in a room for their list of hobbies. You end with a single, combined list of all hobbies from everyone. | Announcing "Happy Birthday!" to each person in the room. The action is performed, but there is no "result" to collect. |
+| **When to Use** | To transform every item in a list. Ex: converting a list of strings to uppercase. | To transform and flatten. Ex: converting a list of sentences into a list of words. | To perform an action with a side effect, like printing to the console, saving to a database, or calling an API. |
+| **Return Type** | `Collection[B]` | `Collection[B]` | `Unit` (Nothing) |
+| **DO ✅** | `List(1, 2, 3).map(_ * 2)` | `List("hello world", "scala is fun").flatMap(_.split(" "))` | `List("a", "b").foreach(println)` |
+
+---
+
+## **Section 3: Scala Functional Constructs**
+
+These constructs are powerful tools for writing expressive and concise code.
+
+### **Reference Table: `for-comprehension` vs. `map/flatMap` chain**
+
+| Feature | `for-comprehension` | `map` / `flatMap` chain |
+| :--- | :--- | :--- |
+| **Definition** | **Syntactic sugar** that makes a series of `map`, `flatMap`, and `filter` calls look like an imperative loop. | The explicit, chained functional method calls. |
+| **Analogy** | A clean, step-by-step recipe written in prose. | A technical diagram showing how each ingredient is processed and passed to the next station. |
+| **When to Use** | **When you have multiple nested layers of operations, especially with `Option`s or `Either`s.** It is often much more readable than a deeply nested chain of `flatMap`s. | For simpler, single-level transformations, a direct `.map()` call is often cleaner and more concise. |
+| **Example** | `for { user <- findUser(id); address <- findAddress(user) } yield (user.name, address.city)` | `findUser(id).flatMap(user => findAddress(user).map(address => (user.name, address.city)))` |
+
+---
+
+## **Section 4: Modeling Data and Types in Scala**
+
+These are the tools you use to give shape and meaning to your data.
+
+### **Reference Table: `class` vs. `case class` vs. `trait` vs. `object`**
+
+| Feature | `class` | `case class` | `trait` (Contract/Ability) | `object` (Singleton) |
+| :--- | :--- | :--- | :--- | :--- |
+| **Definition** | A blueprint for creating objects that encapsulate state (data) and behavior (methods). | A special class optimized for modeling **immutable data**. Comes with many free "superpowers." | A contract defining a set of methods/values that a class can inherit. Used to share behavior across different classes. | A single instance of a class, created automatically. A "singleton." |
+| **When to Use** | When you need an object with complex internal state and rich behavior, like our `BankAccount` example. | **Almost always for modeling data**, especially in Spark. Think `Sale`, `Customer`, `Product`. | To define a shared ability between unrelated classes. Ex: `Printable`, `JsonSerializable`. | To group utility functions (e.g., `StringUtils`) or to create a single, global access point for a service (e.g., a database connection pool). Also used as "Companion Objects" to classes. |
+| **Multiple Instances?**| Yes (`new MyClass()`) | Yes (`MyCaseClass()`) | No (classes `extend` it) | **No**, there is only ever one. |
+| **DO ✅** | `class DatabaseConnection(...)` | `case class LogRecord(...)` | `trait Clickable` | `object DateUtils` |
+
+---
+
+## **Section 5: Apache Spark Essentials**
+
+This section covers concepts you will use daily when writing Spark applications.
+
+### **Reference Table: `DataFrame` vs. `Dataset` vs. `RDD`**
+
+| Feature | `DataFrame` | `Dataset[T]` | `RDD[T]` (Legacy) |
+| :--- | :--- | :--- | :--- |
+| **Definition** | A distributed table of data with named columns. It's like a Spark spreadsheet. | A `DataFrame` with a superpower: it knows the Scala type of each row, defined by a `case class`. | The original low-level Spark API. A distributed collection of objects. |
+| **Type Safety**| **Runtime.** `df.select("collumn")` (a typo) will only fail when the code is executed. | **Compile-time.** `ds.map(_.collumn)` will not compile, saving you from runtime errors. | Compile-time. |
+| **When to Use** | For rapid interactive exploration and when working with Python (PySpark), where type safety is less of a concern. | **The preferred API for modern Scala Spark.** It gives you the best of both worlds: the powerful optimization of `DataFrame`s and the type safety of Scala. | Rarely today. Only for very low-level control over data distribution or for completely unstructured data. |
+
+### **Reference Table: `select` vs. `withColumn` vs. `drop`**
+
+| Feature | `select(...)` | `withColumn("name", ...)` | `drop(...)` |
+| :--- | :--- | :--- | :--- |
+| **Definition**| Selects a set of columns, returning a **new DataFrame** containing *only* those columns. | Adds a new column (or replaces an existing one), returning a **new DataFrame** with *all original columns plus the new one*. | Returns a **new DataFrame** with the specified columns removed. |
+| **Use Case** | For shaping your data: choosing which columns to keep, renaming them, or creating new ones from expressions. | For enriching your data: adding a derived column without losing the original ones. | For cleaning your data: removing temporary or unnecessary columns. |
+| **DO ✅** | `df.select($"colA", ($"colB" * 2).as("colC"))` | `df.withColumn("newCol", $"colA" + $"colB")` | `df.drop("temp_col_1", "temp_col_2")` |
+
+### **Reference Table: Direct Value vs. `lit()`**
+
+| Feature | Direct Value (e.g., `"USA"`, `100`) | `lit(...)` (Literal) |
+| :--- | :--- | :--- |
+| **Definition**| A primitive Scala value. | A Spark function that creates a `Column` from a literal (constant) value. |
+| **When to Use** | In some functions that are designed to accept primitive values directly, like `filter($"country" === "USA")`. | **Almost always when you need to add a constant value as a new column or compare a column to a constant.** This is the explicit and safe way to tell Spark, "Treat this as a constant value, not as a column name." |
+| **DO ✅** | `df.filter($"salary" > 100000)` | `df.withColumn("data_source", lit("Salesforce"))` |
+| **DON'T ❌**| `df.withColumn("data_source", "Salesforce")` (This will cause an error because Spark will look for a column named "Salesforce" instead of using the string value). | N/A |
+
+---
+
+## **Section 6: Spark Performance & Advanced Concepts**
+
+As you advance, understanding these concepts will be crucial for writing efficient and robust Spark jobs.
+
+### **Reference Table: Native Functions vs. UDFs (User-Defined Functions)**
+
+| Feature | Native Spark Functions | UDFs (User-Defined Functions) |
+| :--- | :--- | :--- |
+| **Definition**| Functions built directly into Spark's libraries (e.g., `length()`, `to_date()`, `concat_ws()`). | Custom Scala functions that you can register to run on your data row-by-row. |
+| **Performance** | **Very High.** Spark's Catalyst Optimizer understands these functions and can create highly efficient execution plans. | **Much Lower.** UDFs are a "black box" to Spark. It cannot optimize the code inside them and has to serialize data back and forth, which is very slow. |
+| **Analogy** | Using a recipe from Spark's own, hyper-optimized cookbook. | Giving Spark a handwritten recipe in a foreign language. It can follow the steps, but it can't optimize them or see the bigger picture. |
+| **When to Use** | **ALWAYS prefer native functions.** If there is a built-in function that does what you need, use it. | **As a last resort.** Only use a UDF when the logic is so complex that it's impossible to express with native functions. |
+
+### **Reference Table: `repartition(n)` vs. `coalesce(n)`**
+
+| Feature | `repartition(n)` | `coalesce(n)` |
+| :--- | :--- | :--- |
+| **Definition**| Changes the number of data partitions to `n`. Can increase or decrease the number of partitions. | Changes the number of data partitions to `n`. Can only **decrease** the number of partitions. |
+| **Mechanism** | Performs a **full shuffle**, moving data all across the network to create new, evenly balanced partitions. This is **expensive**. | Performs an **optimized, partial shuffle** by combining existing partitions on the same worker node. This is **cheaper**. |
+| **When to Use** | When you need to **increase** parallelism or to fix data skew after a filter that makes some partitions much larger than others. | When you need to **decrease** parallelism, especially right before writing your data to disk, to create fewer, larger output files. |
+
+This pocket guide is your tool for building confidence. Whenever you have a doubt, return here. With practice, these distinctions will become second nature, and you will be well on your way to writing clear, efficient, and professional Scala and Spark code.

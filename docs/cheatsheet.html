@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>12&nbsp; A Scala &amp; Spark Cheat Sheet – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./recommendations.html" rel="next">
+<link href="./pocketguide.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./cheatsheet.html"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">The Business Analyst’s Playbook: Mastering Scala, Git, and Spark from Scratch</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introdatabricks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introgit.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introprogramming.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./classes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./encapsulation.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./errorhandling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./traits.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Families of Concepts: Inheritance with <code>traits</code></span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./polymorphism.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./spark.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./project.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./pocketguide.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./cheatsheet.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./recommendations.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#section-1-core-scala-language-fundamentals" id="toc-section-1-core-scala-language-fundamentals" class="nav-link active" data-scroll-target="#section-1-core-scala-language-fundamentals"><span class="header-section-number">12.1</span> <strong>Section 1: Core Scala Language Fundamentals</strong></a>
+  <ul class="collapse">
+  <li><a href="#reference-table-val-vs.-var" id="toc-reference-table-val-vs.-var" class="nav-link" data-scroll-target="#reference-table-val-vs.-var"><span class="header-section-number">12.1.1</span> <strong>Reference Table: <code>val</code> vs.&nbsp;<code>var</code></strong></a></li>
+  </ul></li>
+  <li><a href="#section-2-scala-collections-the-right-tool-for-the-job" id="toc-section-2-scala-collections-the-right-tool-for-the-job" class="nav-link" data-scroll-target="#section-2-scala-collections-the-right-tool-for-the-job"><span class="header-section-number">12.2</span> <strong>Section 2: Scala Collections: The Right Tool for the Job</strong></a>
+  <ul class="collapse">
+  <li><a href="#reference-table-list-vs.-vector-vs.-seq-vs.-set-vs.-map" id="toc-reference-table-list-vs.-vector-vs.-seq-vs.-set-vs.-map" class="nav-link" data-scroll-target="#reference-table-list-vs.-vector-vs.-seq-vs.-set-vs.-map"><span class="header-section-number">12.2.1</span> <strong>Reference Table: <code>List</code> vs.&nbsp;<code>Vector</code> vs.&nbsp;<code>Seq</code> vs.&nbsp;<code>Set</code> vs.&nbsp;<code>Map</code></strong></a></li>
+  <li><a href="#reference-table-map-vs.-flatmap-vs.-foreach" id="toc-reference-table-map-vs.-flatmap-vs.-foreach" class="nav-link" data-scroll-target="#reference-table-map-vs.-flatmap-vs.-foreach"><span class="header-section-number">12.2.2</span> <strong>Reference Table: <code>map</code> vs.&nbsp;<code>flatMap</code> vs.&nbsp;<code>foreach</code></strong></a></li>
+  </ul></li>
+  <li><a href="#section-3-scala-functional-constructs" id="toc-section-3-scala-functional-constructs" class="nav-link" data-scroll-target="#section-3-scala-functional-constructs"><span class="header-section-number">12.3</span> <strong>Section 3: Scala Functional Constructs</strong></a>
+  <ul class="collapse">
+  <li><a href="#reference-table-for-comprehension-vs.-mapflatmap-chain" id="toc-reference-table-for-comprehension-vs.-mapflatmap-chain" class="nav-link" data-scroll-target="#reference-table-for-comprehension-vs.-mapflatmap-chain"><span class="header-section-number">12.3.1</span> <strong>Reference Table: <code>for-comprehension</code> vs.&nbsp;<code>map/flatMap</code> chain</strong></a></li>
+  </ul></li>
+  <li><a href="#section-4-modeling-data-and-types-in-scala" id="toc-section-4-modeling-data-and-types-in-scala" class="nav-link" data-scroll-target="#section-4-modeling-data-and-types-in-scala"><span class="header-section-number">12.4</span> <strong>Section 4: Modeling Data and Types in Scala</strong></a>
+  <ul class="collapse">
+  <li><a href="#reference-table-class-vs.-case-class-vs.-trait-vs.-object" id="toc-reference-table-class-vs.-case-class-vs.-trait-vs.-object" class="nav-link" data-scroll-target="#reference-table-class-vs.-case-class-vs.-trait-vs.-object"><span class="header-section-number">12.4.1</span> <strong>Reference Table: <code>class</code> vs.&nbsp;<code>case class</code> vs.&nbsp;<code>trait</code> vs.&nbsp;<code>object</code></strong></a></li>
+  </ul></li>
+  <li><a href="#section-5-apache-spark-essentials" id="toc-section-5-apache-spark-essentials" class="nav-link" data-scroll-target="#section-5-apache-spark-essentials"><span class="header-section-number">12.5</span> <strong>Section 5: Apache Spark Essentials</strong></a>
+  <ul class="collapse">
+  <li><a href="#reference-table-dataframe-vs.-dataset-vs.-rdd" id="toc-reference-table-dataframe-vs.-dataset-vs.-rdd" class="nav-link" data-scroll-target="#reference-table-dataframe-vs.-dataset-vs.-rdd"><span class="header-section-number">12.5.1</span> <strong>Reference Table: <code>DataFrame</code> vs.&nbsp;<code>Dataset</code> vs.&nbsp;<code>RDD</code></strong></a></li>
+  <li><a href="#reference-table-select-vs.-withcolumn-vs.-drop" id="toc-reference-table-select-vs.-withcolumn-vs.-drop" class="nav-link" data-scroll-target="#reference-table-select-vs.-withcolumn-vs.-drop"><span class="header-section-number">12.5.2</span> <strong>Reference Table: <code>select</code> vs.&nbsp;<code>withColumn</code> vs.&nbsp;<code>drop</code></strong></a></li>
+  <li><a href="#reference-table-direct-value-vs.-lit" id="toc-reference-table-direct-value-vs.-lit" class="nav-link" data-scroll-target="#reference-table-direct-value-vs.-lit"><span class="header-section-number">12.5.3</span> <strong>Reference Table: Direct Value vs.&nbsp;<code>lit()</code></strong></a></li>
+  </ul></li>
+  <li><a href="#section-6-spark-performance-advanced-concepts" id="toc-section-6-spark-performance-advanced-concepts" class="nav-link" data-scroll-target="#section-6-spark-performance-advanced-concepts"><span class="header-section-number">12.6</span> <strong>Section 6: Spark Performance &amp; Advanced Concepts</strong></a>
+  <ul class="collapse">
+  <li><a href="#reference-table-native-functions-vs.-udfs-user-defined-functions" id="toc-reference-table-native-functions-vs.-udfs-user-defined-functions" class="nav-link" data-scroll-target="#reference-table-native-functions-vs.-udfs-user-defined-functions"><span class="header-section-number">12.6.1</span> <strong>Reference Table: Native Functions vs.&nbsp;UDFs (User-Defined Functions)</strong></a></li>
+  <li><a href="#reference-table-repartitionn-vs.-coalescen" id="toc-reference-table-repartitionn-vs.-coalescen" class="nav-link" data-scroll-target="#reference-table-repartitionn-vs.-coalescen"><span class="header-section-number">12.6.2</span> <strong>Reference Table: <code>repartition(n)</code> vs.&nbsp;<code>coalesce(n)</code></strong></a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Hello! Welcome to your new quick-reference guide. As you progress on your journey, you will repeatedly encounter certain keywords, patterns, and concepts. Knowing the subtle differences between them and when to use each is what elevates a beginner to an effective professional.</p>
+<p>This chapter is not meant to be read cover-to-cover. It is a <strong>cheat sheet</strong>—a reference guide to return to whenever you ask yourself, “Should I use a <code>val</code> or a <code>var</code> here? What’s the real difference between <code>map</code> and <code>flatMap</code>? When is <code>lit()</code> actually necessary?”</p>
+<p>Let’s dive into the distinctions that matter most.</p>
+<hr>
+<section id="section-1-core-scala-language-fundamentals" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="section-1-core-scala-language-fundamentals"><span class="header-section-number">12.1</span> <strong>Section 1: Core Scala Language Fundamentals</strong></h2>
+<p>This section covers the absolute building blocks of the Scala language itself.</p>
+<section id="reference-table-val-vs.-var" class="level3" data-number="12.1.1">
+<h3 data-number="12.1.1" class="anchored" data-anchor-id="reference-table-val-vs.-var"><span class="header-section-number">12.1.1</span> <strong>Reference Table: <code>val</code> vs.&nbsp;<code>var</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>val</code> (Value/Constant)</th>
+<th style="text-align: left;"><code>var</code> (Variable)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">An immutable reference. Once assigned, it can <strong>never</strong> be reassigned.</td>
+<td style="text-align: left;">A mutable reference. It can be reassigned to new values.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Analogy</strong></td>
+<td style="text-align: left;">A person’s date of birth. It’s fixed.</td>
+<td style="text-align: left;">A person’s home address. It can change over time.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;"><strong>Almost always.</strong> This should be your default choice. It leads to safer, more predictable code, which is critical in parallel systems like Spark.</td>
+<td style="text-align: left;"><strong>Only when mutability is strictly required.</strong> Examples include counters in loops or when an object’s state must be explicitly changed over its lifecycle.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>When NOT to Use</strong></td>
+<td style="text-align: left;">When you genuinely need a value that will be updated multiple times.</td>
+<td style="text-align: left;">For most of your code. If you can rewrite your logic to use a <code>val</code> (e.g., by creating a new value from an old one), you should.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DO ✅</strong></td>
+<td style="text-align: left;"><code>val pi = 3.14</code></td>
+<td style="text-align: left;"><code>var loopCounter = 0; loopCounter += 1</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DON’T ❌</strong></td>
+<td style="text-align: left;"><code>val x = 5; x = 10</code> (Will not compile)</td>
+<td style="text-align: left;"><code>var pi = 3.14</code> (Semantically wrong and misleading)</td>
+</tr>
+</tbody>
+</table>
+<blockquote class="blockquote">
+<p><strong>Pro Tip:</strong> Immutability is one of the most important concepts in modern programming. Adopt a <strong>“<code>val</code>-first” mindset.</strong> Using <code>val</code> by default makes your code easier to reason about because you know values won’t change unexpectedly under your feet.</p>
+</blockquote>
+<hr>
+</section>
+</section>
+<section id="section-2-scala-collections-the-right-tool-for-the-job" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="section-2-scala-collections-the-right-tool-for-the-job"><span class="header-section-number">12.2</span> <strong>Section 2: Scala Collections: The Right Tool for the Job</strong></h2>
+<p>How you store and manipulate groups of data is fundamental. Choosing the right collection type can have a big impact on performance and clarity.</p>
+<section id="reference-table-list-vs.-vector-vs.-seq-vs.-set-vs.-map" class="level3" data-number="12.2.1">
+<h3 data-number="12.2.1" class="anchored" data-anchor-id="reference-table-list-vs.-vector-vs.-seq-vs.-set-vs.-map"><span class="header-section-number">12.2.1</span> <strong>Reference Table: <code>List</code> vs.&nbsp;<code>Vector</code> vs.&nbsp;<code>Seq</code> vs.&nbsp;<code>Set</code> vs.&nbsp;<code>Map</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>List</code></th>
+<th style="text-align: left;"><code>Vector</code></th>
+<th style="text-align: left;"><code>Seq</code> (Sequence)</th>
+<th style="text-align: left;"><code>Set</code></th>
+<th style="text-align: left;"><code>Map</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">An immutable linear collection (a linked list).</td>
+<td style="text-align: left;">An immutable indexed collection (a data tree).</td>
+<td style="text-align: left;">A <code>trait</code> (contract) representing any ordered collection. <code>List</code> and <code>Vector</code> are types of <code>Seq</code>.</td>
+<td style="text-align: left;">An <strong>unordered</strong> collection of <strong>unique</strong> items.</td>
+<td style="text-align: left;">A collection of <strong>key-value</strong> pairs.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Performance</strong></td>
+<td style="text-align: left;"><strong>Fast</strong> for adding/removing at the head. <strong>Slow</strong> for random access (<code>myList(1000)</code>).</td>
+<td style="text-align: left;"><strong>Fast for everything:</strong> random access, adding/removing at the head or tail. Well-balanced.</td>
+<td style="text-align: left;">N/A (it’s the contract, not the implementation).</td>
+<td style="text-align: left;">Fast for checking if an item exists (<code>contains</code>).</td>
+<td style="text-align: left;">Fast for looking up a value by its key.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;">For classic “head/tail” recursion algorithms.</td>
+<td style="text-align: left;"><strong>Your default, general-purpose <code>Seq</code>.</strong> If you are unsure which sequence to use, start with <code>Vector</code>.</td>
+<td style="text-align: left;">When your function needs to accept <em>any</em> kind of sequence (<code>List</code>, <code>Vector</code>, etc.).</td>
+<td style="text-align: left;">When you need to store a collection of unique items and quickly check for membership.</td>
+<td style="text-align: left;">Whenever you need to associate keys with values, like a dictionary or lookup table.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DO ✅</strong></td>
+<td style="text-align: left;"><code>val names: List[String] = List("a", "b")</code></td>
+<td style="text-align: left;"><code>val names: Vector[Int] = Vector(1, 2)</code></td>
+<td style="text-align: left;"><code>def process(s: Seq[Int])</code></td>
+<td style="text-align: left;"><code>val uniqueIds: Set[Int] = Set(1, 2, 2, 3)</code> (becomes <code>Set(1,2,3)</code>)</td>
+<td style="text-align: left;"><code>val capitals: Map[String, String] = Map("USA" -&gt; "D.C.")</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reference-table-map-vs.-flatmap-vs.-foreach" class="level3" data-number="12.2.2">
+<h3 data-number="12.2.2" class="anchored" data-anchor-id="reference-table-map-vs.-flatmap-vs.-foreach"><span class="header-section-number">12.2.2</span> <strong>Reference Table: <code>map</code> vs.&nbsp;<code>flatMap</code> vs.&nbsp;<code>foreach</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>map</code></th>
+<th style="text-align: left;"><code>flatMap</code></th>
+<th style="text-align: left;"><code>foreach</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">Transforms each element of a collection 1-to-1, returning a <strong>new collection</strong> of the same size.</td>
+<td style="text-align: left;">Transforms each element into a collection, then “flattens” all the resulting collections into a <strong>single new collection</strong>.</td>
+<td style="text-align: left;">Executes an action for each element but <strong>returns nothing</strong> (<code>Unit</code>). Used for side effects.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Analogy</strong></td>
+<td style="text-align: left;">Giving each person in a room a hat. You start with 10 people, you end with 10 hats.</td>
+<td style="text-align: left;">Asking each person in a room for their list of hobbies. You end with a single, combined list of all hobbies from everyone.</td>
+<td style="text-align: left;">Announcing “Happy Birthday!” to each person in the room. The action is performed, but there is no “result” to collect.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;">To transform every item in a list. Ex: converting a list of strings to uppercase.</td>
+<td style="text-align: left;">To transform and flatten. Ex: converting a list of sentences into a list of words.</td>
+<td style="text-align: left;">To perform an action with a side effect, like printing to the console, saving to a database, or calling an API.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Return Type</strong></td>
+<td style="text-align: left;"><code>Collection[B]</code></td>
+<td style="text-align: left;"><code>Collection[B]</code></td>
+<td style="text-align: left;"><code>Unit</code> (Nothing)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DO ✅</strong></td>
+<td style="text-align: left;"><code>List(1, 2, 3).map(_ * 2)</code></td>
+<td style="text-align: left;"><code>List("hello world", "scala is fun").flatMap(_.split(" "))</code></td>
+<td style="text-align: left;"><code>List("a", "b").foreach(println)</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="section-3-scala-functional-constructs" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="section-3-scala-functional-constructs"><span class="header-section-number">12.3</span> <strong>Section 3: Scala Functional Constructs</strong></h2>
+<p>These constructs are powerful tools for writing expressive and concise code.</p>
+<section id="reference-table-for-comprehension-vs.-mapflatmap-chain" class="level3" data-number="12.3.1">
+<h3 data-number="12.3.1" class="anchored" data-anchor-id="reference-table-for-comprehension-vs.-mapflatmap-chain"><span class="header-section-number">12.3.1</span> <strong>Reference Table: <code>for-comprehension</code> vs.&nbsp;<code>map/flatMap</code> chain</strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>for-comprehension</code></th>
+<th style="text-align: left;"><code>map</code> / <code>flatMap</code> chain</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;"><strong>Syntactic sugar</strong> that makes a series of <code>map</code>, <code>flatMap</code>, and <code>filter</code> calls look like an imperative loop.</td>
+<td style="text-align: left;">The explicit, chained functional method calls.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Analogy</strong></td>
+<td style="text-align: left;">A clean, step-by-step recipe written in prose.</td>
+<td style="text-align: left;">A technical diagram showing how each ingredient is processed and passed to the next station.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;"><strong>When you have multiple nested layers of operations, especially with <code>Option</code>s or <code>Either</code>s.</strong> It is often much more readable than a deeply nested chain of <code>flatMap</code>s.</td>
+<td style="text-align: left;">For simpler, single-level transformations, a direct <code>.map()</code> call is often cleaner and more concise.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Example</strong></td>
+<td style="text-align: left;"><code>for { user &lt;- findUser(id); address &lt;- findAddress(user) } yield (user.name, address.city)</code></td>
+<td style="text-align: left;"><code>findUser(id).flatMap(user =&gt; findAddress(user).map(address =&gt; (user.name, address.city)))</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="section-4-modeling-data-and-types-in-scala" class="level2" data-number="12.4">
+<h2 data-number="12.4" class="anchored" data-anchor-id="section-4-modeling-data-and-types-in-scala"><span class="header-section-number">12.4</span> <strong>Section 4: Modeling Data and Types in Scala</strong></h2>
+<p>These are the tools you use to give shape and meaning to your data.</p>
+<section id="reference-table-class-vs.-case-class-vs.-trait-vs.-object" class="level3" data-number="12.4.1">
+<h3 data-number="12.4.1" class="anchored" data-anchor-id="reference-table-class-vs.-case-class-vs.-trait-vs.-object"><span class="header-section-number">12.4.1</span> <strong>Reference Table: <code>class</code> vs.&nbsp;<code>case class</code> vs.&nbsp;<code>trait</code> vs.&nbsp;<code>object</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>class</code></th>
+<th style="text-align: left;"><code>case class</code></th>
+<th style="text-align: left;"><code>trait</code> (Contract/Ability)</th>
+<th style="text-align: left;"><code>object</code> (Singleton)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">A blueprint for creating objects that encapsulate state (data) and behavior (methods).</td>
+<td style="text-align: left;">A special class optimized for modeling <strong>immutable data</strong>. Comes with many free “superpowers.”</td>
+<td style="text-align: left;">A contract defining a set of methods/values that a class can inherit. Used to share behavior across different classes.</td>
+<td style="text-align: left;">A single instance of a class, created automatically. A “singleton.”</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;">When you need an object with complex internal state and rich behavior, like our <code>BankAccount</code> example.</td>
+<td style="text-align: left;"><strong>Almost always for modeling data</strong>, especially in Spark. Think <code>Sale</code>, <code>Customer</code>, <code>Product</code>.</td>
+<td style="text-align: left;">To define a shared ability between unrelated classes. Ex: <code>Printable</code>, <code>JsonSerializable</code>.</td>
+<td style="text-align: left;">To group utility functions (e.g., <code>StringUtils</code>) or to create a single, global access point for a service (e.g., a database connection pool). Also used as “Companion Objects” to classes.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Multiple Instances?</strong></td>
+<td style="text-align: left;">Yes (<code>new MyClass()</code>)</td>
+<td style="text-align: left;">Yes (<code>MyCaseClass()</code>)</td>
+<td style="text-align: left;">No (classes <code>extend</code> it)</td>
+<td style="text-align: left;"><strong>No</strong>, there is only ever one.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DO ✅</strong></td>
+<td style="text-align: left;"><code>class DatabaseConnection(...)</code></td>
+<td style="text-align: left;"><code>case class LogRecord(...)</code></td>
+<td style="text-align: left;"><code>trait Clickable</code></td>
+<td style="text-align: left;"><code>object DateUtils</code></td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="section-5-apache-spark-essentials" class="level2" data-number="12.5">
+<h2 data-number="12.5" class="anchored" data-anchor-id="section-5-apache-spark-essentials"><span class="header-section-number">12.5</span> <strong>Section 5: Apache Spark Essentials</strong></h2>
+<p>This section covers concepts you will use daily when writing Spark applications.</p>
+<section id="reference-table-dataframe-vs.-dataset-vs.-rdd" class="level3" data-number="12.5.1">
+<h3 data-number="12.5.1" class="anchored" data-anchor-id="reference-table-dataframe-vs.-dataset-vs.-rdd"><span class="header-section-number">12.5.1</span> <strong>Reference Table: <code>DataFrame</code> vs.&nbsp;<code>Dataset</code> vs.&nbsp;<code>RDD</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>DataFrame</code></th>
+<th style="text-align: left;"><code>Dataset[T]</code></th>
+<th style="text-align: left;"><code>RDD[T]</code> (Legacy)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">A distributed table of data with named columns. It’s like a Spark spreadsheet.</td>
+<td style="text-align: left;">A <code>DataFrame</code> with a superpower: it knows the Scala type of each row, defined by a <code>case class</code>.</td>
+<td style="text-align: left;">The original low-level Spark API. A distributed collection of objects.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Type Safety</strong></td>
+<td style="text-align: left;"><strong>Runtime.</strong> <code>df.select("collumn")</code> (a typo) will only fail when the code is executed.</td>
+<td style="text-align: left;"><strong>Compile-time.</strong> <code>ds.map(_.collumn)</code> will not compile, saving you from runtime errors.</td>
+<td style="text-align: left;">Compile-time.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;">For rapid interactive exploration and when working with Python (PySpark), where type safety is less of a concern.</td>
+<td style="text-align: left;"><strong>The preferred API for modern Scala Spark.</strong> It gives you the best of both worlds: the powerful optimization of <code>DataFrame</code>s and the type safety of Scala.</td>
+<td style="text-align: left;">Rarely today. Only for very low-level control over data distribution or for completely unstructured data.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reference-table-select-vs.-withcolumn-vs.-drop" class="level3" data-number="12.5.2">
+<h3 data-number="12.5.2" class="anchored" data-anchor-id="reference-table-select-vs.-withcolumn-vs.-drop"><span class="header-section-number">12.5.2</span> <strong>Reference Table: <code>select</code> vs.&nbsp;<code>withColumn</code> vs.&nbsp;<code>drop</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>select(...)</code></th>
+<th style="text-align: left;"><code>withColumn("name", ...)</code></th>
+<th style="text-align: left;"><code>drop(...)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">Selects a set of columns, returning a <strong>new DataFrame</strong> containing <em>only</em> those columns.</td>
+<td style="text-align: left;">Adds a new column (or replaces an existing one), returning a <strong>new DataFrame</strong> with <em>all original columns plus the new one</em>.</td>
+<td style="text-align: left;">Returns a <strong>new DataFrame</strong> with the specified columns removed.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Use Case</strong></td>
+<td style="text-align: left;">For shaping your data: choosing which columns to keep, renaming them, or creating new ones from expressions.</td>
+<td style="text-align: left;">For enriching your data: adding a derived column without losing the original ones.</td>
+<td style="text-align: left;">For cleaning your data: removing temporary or unnecessary columns.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DO ✅</strong></td>
+<td style="text-align: left;"><code>df.select($"colA", ($"colB" * 2).as("colC"))</code></td>
+<td style="text-align: left;"><code>df.withColumn("newCol", $"colA" + $"colB")</code></td>
+<td style="text-align: left;"><code>df.drop("temp_col_1", "temp_col_2")</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reference-table-direct-value-vs.-lit" class="level3" data-number="12.5.3">
+<h3 data-number="12.5.3" class="anchored" data-anchor-id="reference-table-direct-value-vs.-lit"><span class="header-section-number">12.5.3</span> <strong>Reference Table: Direct Value vs.&nbsp;<code>lit()</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Direct Value (e.g., <code>"USA"</code>, <code>100</code>)</th>
+<th style="text-align: left;"><code>lit(...)</code> (Literal)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">A primitive Scala value.</td>
+<td style="text-align: left;">A Spark function that creates a <code>Column</code> from a literal (constant) value.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;">In some functions that are designed to accept primitive values directly, like <code>filter($"country" === "USA")</code>.</td>
+<td style="text-align: left;"><strong>Almost always when you need to add a constant value as a new column or compare a column to a constant.</strong> This is the explicit and safe way to tell Spark, “Treat this as a constant value, not as a column name.”</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DO ✅</strong></td>
+<td style="text-align: left;"><code>df.filter($"salary" &gt; 100000)</code></td>
+<td style="text-align: left;"><code>df.withColumn("data_source", lit("Salesforce"))</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DON’T ❌</strong></td>
+<td style="text-align: left;"><code>df.withColumn("data_source", "Salesforce")</code> (This will cause an error because Spark will look for a column named “Salesforce” instead of using the string value).</td>
+<td style="text-align: left;">N/A</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+</section>
+<section id="section-6-spark-performance-advanced-concepts" class="level2" data-number="12.6">
+<h2 data-number="12.6" class="anchored" data-anchor-id="section-6-spark-performance-advanced-concepts"><span class="header-section-number">12.6</span> <strong>Section 6: Spark Performance &amp; Advanced Concepts</strong></h2>
+<p>As you advance, understanding these concepts will be crucial for writing efficient and robust Spark jobs.</p>
+<section id="reference-table-native-functions-vs.-udfs-user-defined-functions" class="level3" data-number="12.6.1">
+<h3 data-number="12.6.1" class="anchored" data-anchor-id="reference-table-native-functions-vs.-udfs-user-defined-functions"><span class="header-section-number">12.6.1</span> <strong>Reference Table: Native Functions vs.&nbsp;UDFs (User-Defined Functions)</strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;">Native Spark Functions</th>
+<th style="text-align: left;">UDFs (User-Defined Functions)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">Functions built directly into Spark’s libraries (e.g., <code>length()</code>, <code>to_date()</code>, <code>concat_ws()</code>).</td>
+<td style="text-align: left;">Custom Scala functions that you can register to run on your data row-by-row.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Performance</strong></td>
+<td style="text-align: left;"><strong>Very High.</strong> Spark’s Catalyst Optimizer understands these functions and can create highly efficient execution plans.</td>
+<td style="text-align: left;"><strong>Much Lower.</strong> UDFs are a “black box” to Spark. It cannot optimize the code inside them and has to serialize data back and forth, which is very slow.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Analogy</strong></td>
+<td style="text-align: left;">Using a recipe from Spark’s own, hyper-optimized cookbook.</td>
+<td style="text-align: left;">Giving Spark a handwritten recipe in a foreign language. It can follow the steps, but it can’t optimize them or see the bigger picture.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;"><strong>ALWAYS prefer native functions.</strong> If there is a built-in function that does what you need, use it.</td>
+<td style="text-align: left;"><strong>As a last resort.</strong> Only use a UDF when the logic is so complex that it’s impossible to express with native functions.</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="reference-table-repartitionn-vs.-coalescen" class="level3" data-number="12.6.2">
+<h3 data-number="12.6.2" class="anchored" data-anchor-id="reference-table-repartitionn-vs.-coalescen"><span class="header-section-number">12.6.2</span> <strong>Reference Table: <code>repartition(n)</code> vs.&nbsp;<code>coalesce(n)</code></strong></h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Feature</th>
+<th style="text-align: left;"><code>repartition(n)</code></th>
+<th style="text-align: left;"><code>coalesce(n)</code></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Definition</strong></td>
+<td style="text-align: left;">Changes the number of data partitions to <code>n</code>. Can increase or decrease the number of partitions.</td>
+<td style="text-align: left;">Changes the number of data partitions to <code>n</code>. Can only <strong>decrease</strong> the number of partitions.</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Mechanism</strong></td>
+<td style="text-align: left;">Performs a <strong>full shuffle</strong>, moving data all across the network to create new, evenly balanced partitions. This is <strong>expensive</strong>.</td>
+<td style="text-align: left;">Performs an <strong>optimized, partial shuffle</strong> by combining existing partitions on the same worker node. This is <strong>cheaper</strong>.</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>When to Use</strong></td>
+<td style="text-align: left;">When you need to <strong>increase</strong> parallelism or to fix data skew after a filter that makes some partitions much larger than others.</td>
+<td style="text-align: left;">When you need to <strong>decrease</strong> parallelism, especially right before writing your data to disk, to create fewer, larger output files.</td>
+</tr>
+</tbody>
+</table>
+<p>This pocket guide is your tool for building confidence. Whenever you have a doubt, return here. With practice, these distinctions will become second nature, and you will be well on your way to writing clear, efficient, and professional Scala and Spark code.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./pocketguide.html" class="pagination-link" aria-label="A Pocket Guide to Clean Code in Scala">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./recommendations.html" class="pagination-link" aria-label="Where to Go From Here? Your Compass for Lifelong Learning">
+        <span class="nav-page-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
