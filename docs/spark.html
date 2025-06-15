@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>8&nbsp; Meet Your Analysis Engine: Apache Spark – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
+<title>9&nbsp; Meet Your Analysis Engine: Apache Spark – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./spark.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./spark.html"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -145,79 +145,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Your Lab: A Guided Tour of Databricks Notebooks</span></a>
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introdatabricks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introgit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introprogramming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./classes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./encapsulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./errorhandling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./traits.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Families of Concepts: Inheritance with <code>traits</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Families of Concepts: Inheritance with <code>traits</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./polymorphism.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./spark.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pocketguide.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./recommendations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
   </div>
 </li>
     </ul>
@@ -230,16 +236,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#why-spark-the-context-of-big-data" id="toc-why-spark-the-context-of-big-data" class="nav-link active" data-scroll-target="#why-spark-the-context-of-big-data"><span class="header-section-number">8.1</span> Why Spark? The Context of Big Data</a></li>
-  <li><a href="#the-heart-of-spark-lazy-evaluation" id="toc-the-heart-of-spark-lazy-evaluation" class="nav-link" data-scroll-target="#the-heart-of-spark-lazy-evaluation"><span class="header-section-number">8.2</span> The Heart of Spark: Lazy Evaluation</a></li>
-  <li><a href="#the-two-types-of-operations-transformations-and-actions" id="toc-the-two-types-of-operations-transformations-and-actions" class="nav-link" data-scroll-target="#the-two-types-of-operations-transformations-and-actions"><span class="header-section-number">8.3</span> The Two Types of Operations: Transformations and Actions</a></li>
-  <li><a href="#hands-on-a-more-complete-example" id="toc-hands-on-a-more-complete-example" class="nav-link" data-scroll-target="#hands-on-a-more-complete-example"><span class="header-section-number">8.4</span> Hands-On: A More Complete Example</a>
+  <li><a href="#why-spark-the-context-of-big-data" id="toc-why-spark-the-context-of-big-data" class="nav-link active" data-scroll-target="#why-spark-the-context-of-big-data"><span class="header-section-number">9.1</span> Why Spark? The Context of Big Data</a></li>
+  <li><a href="#the-heart-of-spark-lazy-evaluation" id="toc-the-heart-of-spark-lazy-evaluation" class="nav-link" data-scroll-target="#the-heart-of-spark-lazy-evaluation"><span class="header-section-number">9.2</span> The Heart of Spark: Lazy Evaluation</a></li>
+  <li><a href="#the-two-types-of-operations-transformations-and-actions" id="toc-the-two-types-of-operations-transformations-and-actions" class="nav-link" data-scroll-target="#the-two-types-of-operations-transformations-and-actions"><span class="header-section-number">9.3</span> The Two Types of Operations: Transformations and Actions</a></li>
+  <li><a href="#hands-on-a-more-complete-example" id="toc-hands-on-a-more-complete-example" class="nav-link" data-scroll-target="#hands-on-a-more-complete-example"><span class="header-section-number">9.4</span> Hands-On: A More Complete Example</a>
   <ul class="collapse">
-  <li><a href="#step-1-create-sample-data" id="toc-step-1-create-sample-data" class="nav-link" data-scroll-target="#step-1-create-sample-data"><span class="header-section-number">8.4.1</span> Step 1: Create Sample Data</a></li>
-  <li><a href="#step-2-build-a-plan-with-transformations" id="toc-step-2-build-a-plan-with-transformations" class="nav-link" data-scroll-target="#step-2-build-a-plan-with-transformations"><span class="header-section-number">8.4.2</span> Step 2: Build a Plan with Transformations</a></li>
-  <li><a href="#step-3-trigger-the-work-with-an-action" id="toc-step-3-trigger-the-work-with-an-action" class="nav-link" data-scroll-target="#step-3-trigger-the-work-with-an-action"><span class="header-section-number">8.4.3</span> Step 3: Trigger the Work with an Action</a></li>
+  <li><a href="#step-1-create-sample-data" id="toc-step-1-create-sample-data" class="nav-link" data-scroll-target="#step-1-create-sample-data"><span class="header-section-number">9.4.1</span> Step 1: Create Sample Data</a></li>
+  <li><a href="#step-2-build-a-plan-with-transformations" id="toc-step-2-build-a-plan-with-transformations" class="nav-link" data-scroll-target="#step-2-build-a-plan-with-transformations"><span class="header-section-number">9.4.2</span> Step 2: Build a Plan with Transformations</a></li>
+  <li><a href="#step-3-trigger-the-work-with-an-action" id="toc-step-3-trigger-the-work-with-an-action" class="nav-link" data-scroll-target="#step-3-trigger-the-work-with-an-action"><span class="header-section-number">9.4.3</span> Step 3: Trigger the Work with an Action</a></li>
   </ul></li>
-  <li><a href="#practical-tips-for-beginners" id="toc-practical-tips-for-beginners" class="nav-link" data-scroll-target="#practical-tips-for-beginners"><span class="header-section-number">8.5</span> Practical Tips for Beginners</a></li>
+  <li><a href="#practical-tips-for-beginners" id="toc-practical-tips-for-beginners" class="nav-link" data-scroll-target="#practical-tips-for-beginners"><span class="header-section-number">9.5</span> Practical Tips for Beginners</a></li>
   </ul>
 </nav>
     </div>
@@ -248,7 +254,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></h1>
+<h1 class="title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></h1>
 </div>
 
 
@@ -268,8 +274,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>In our journey so far, we have learned the language of Scala and the art of modeling data with classes. We’ve worked with lists of items, like <code>List("Alice", "Bob")</code>, that fit comfortably in our computer’s memory. But what happens when our list isn’t just two names, but two <em>billion</em> names? What happens when our data file isn’t a few kilobytes, but many terabytes?</p>
 <p>This is the challenge of “Big Data.” The data is simply too large to fit or be processed on a single machine. To solve this, we need to move from a single workshop to a massive, coordinated factory.</p>
 <p>Welcome to <strong>Apache Spark</strong>.</p>
-<section id="why-spark-the-context-of-big-data" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="why-spark-the-context-of-big-data"><span class="header-section-number">8.1</span> Why Spark? The Context of Big Data</h2>
+<section id="why-spark-the-context-of-big-data" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="why-spark-the-context-of-big-data"><span class="header-section-number">9.1</span> Why Spark? The Context of Big Data</h2>
 <p>Modern businesses run on data. A streaming service analyzes billions of clicks to recommend your next show. A bank processes millions of transactions a minute to detect fraud. This reality is often described with three “V’s”: * <strong>Volume:</strong> The sheer amount of data is enormous. * <strong>Velocity:</strong> The data arrives incredibly fast. * <strong>Variety:</strong> The data comes in many forms—structured tables, text, images, logs.</p>
 <p>A standard program on a single laptop, even a powerful one, would take days or even years to process this data, if it didn’t crash first. Spark was designed specifically to solve this problem by distributing the work across a cluster of many computers working together.</p>
 <ul>
@@ -285,8 +291,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </ul>
 <p>Your job is to write one master recipe. Spark’s job is to intelligently divide up the ingredients and the steps of the recipe among all the kitchen stations and cooks to get the job done with incredible speed.</p>
 </section>
-<section id="the-heart-of-spark-lazy-evaluation" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="the-heart-of-spark-lazy-evaluation"><span class="header-section-number">8.2</span> The Heart of Spark: Lazy Evaluation</h2>
+<section id="the-heart-of-spark-lazy-evaluation" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="the-heart-of-spark-lazy-evaluation"><span class="header-section-number">9.2</span> The Heart of Spark: Lazy Evaluation</h2>
 <p>The single most important concept to understand about Spark is <strong>lazy evaluation</strong>.</p>
 <ul>
 <li><strong>Analogy: Planning a Road Trip</strong> Imagine you’re planning a multi-day road trip. You sit down with a map and write out a detailed plan:
@@ -300,8 +306,8 @@ You have created a complete <em>plan</em>. But have you started the car? Burned 
 <p>Spark works exactly the same way. When you write code to load data and then filter it and then group it, Spark doesn’t actually do anything. It just listens to your commands and quietly builds a logical execution plan, called a <strong>Directed Acyclic Graph (DAG)</strong>. It’s a “to-do list” for the data. Spark is “lazy”—it won’t do any work until it absolutely has to.</p>
 <p>This laziness is its superpower. Because it waits until the last second, it can look at your entire plan and use its powerful <strong>Catalyst Optimizer</strong> to figure out the most efficient way to get the final result, like rearranging steps or combining them to be more efficient.</p>
 </section>
-<section id="the-two-types-of-operations-transformations-and-actions" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="the-two-types-of-operations-transformations-and-actions"><span class="header-section-number">8.3</span> The Two Types of Operations: Transformations and Actions</h2>
+<section id="the-two-types-of-operations-transformations-and-actions" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="the-two-types-of-operations-transformations-and-actions"><span class="header-section-number">9.3</span> The Two Types of Operations: Transformations and Actions</h2>
 <p>Because Spark is lazy, its operations are divided into two categories:</p>
 <ol type="1">
 <li><p><strong>Transformations (Lazy):</strong> These are the “planning” steps. A transformation takes a DataFrame and returns a <em>new</em> DataFrame with the transformation instruction added to the plan. They are the core of your data manipulation logic.</p></li>
@@ -376,11 +382,11 @@ You have created a complete <em>plan</em>. But have you started the car? Burned 
 </tbody>
 </table>
 </section>
-<section id="hands-on-a-more-complete-example" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="hands-on-a-more-complete-example"><span class="header-section-number">8.4</span> Hands-On: A More Complete Example</h2>
+<section id="hands-on-a-more-complete-example" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="hands-on-a-more-complete-example"><span class="header-section-number">9.4</span> Hands-On: A More Complete Example</h2>
 <p>Let’s put this all together with a more realistic data manipulation workflow in your Databricks notebook.</p>
-<section id="step-1-create-sample-data" class="level3" data-number="8.4.1">
-<h3 data-number="8.4.1" class="anchored" data-anchor-id="step-1-create-sample-data"><span class="header-section-number">8.4.1</span> Step 1: Create Sample Data</h3>
+<section id="step-1-create-sample-data" class="level3" data-number="9.4.1">
+<h3 data-number="9.4.1" class="anchored" data-anchor-id="step-1-create-sample-data"><span class="header-section-number">9.4.1</span> Step 1: Create Sample Data</h3>
 <p>Let’s imagine we have data about employees in a company.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">import</span> spark<span class="op">.</span>implicits<span class="op">.</span>_</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -397,8 +403,8 @@ You have created a complete <em>plan</em>. But have you started the car? Burned 
 <span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="st">"Initial DataFrame created. (No work done yet!)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>At this point, you have created a DataFrame, but Spark has done virtually no work. It has only noted the plan to create this data if needed.</p>
 </section>
-<section id="step-2-build-a-plan-with-transformations" class="level3" data-number="8.4.2">
-<h3 data-number="8.4.2" class="anchored" data-anchor-id="step-2-build-a-plan-with-transformations"><span class="header-section-number">8.4.2</span> Step 2: Build a Plan with Transformations</h3>
+<section id="step-2-build-a-plan-with-transformations" class="level3" data-number="9.4.2">
+<h3 data-number="9.4.2" class="anchored" data-anchor-id="step-2-build-a-plan-with-transformations"><span class="header-section-number">9.4.2</span> Step 2: Build a Plan with Transformations</h3>
 <p>Now, let’s chain several transformations to answer a business question: “We want to give all engineers a 10% raise and see their new salary, but we only care about their name and new salary.”</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> engineeringRaisesDf <span class="op">=</span> employeesDf</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="op">.</span><span class="fu">filter</span><span class="op">(</span>$<span class="st">"department"</span> <span class="op">===</span> <span class="st">"Engineering"</span><span class="op">)</span> <span class="co">// Transformation 1: Keep only engineers</span></span>
@@ -409,8 +415,8 @@ You have created a complete <em>plan</em>. But have you started the car? Burned 
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="st">"Plan with four transformations created. (Still no work done!)"</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>We have built a powerful, multi-step plan. The variable <code>engineeringRaisesDf</code> is a new DataFrame that contains this entire plan, but no calculations have been performed on the cluster yet.</p>
 </section>
-<section id="step-3-trigger-the-work-with-an-action" class="level3" data-number="8.4.3">
-<h3 data-number="8.4.3" class="anchored" data-anchor-id="step-3-trigger-the-work-with-an-action"><span class="header-section-number">8.4.3</span> Step 3: Trigger the Work with an Action</h3>
+<section id="step-3-trigger-the-work-with-an-action" class="level3" data-number="9.4.3">
+<h3 data-number="9.4.3" class="anchored" data-anchor-id="step-3-trigger-the-work-with-an-action"><span class="header-section-number">9.4.3</span> Step 3: Trigger the Work with an Action</h3>
 <p>Now, let’s see the result. We’ll use <code>show()</code>, which is an action. This is the moment Spark looks at our four-step plan, optimizes it, sends the work to the executors, and brings the final result back to us.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="st">"Now executing the plan with an action..."</span><span class="op">)</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>engineeringRaisesDf<span class="op">.</span><span class="fu">show</span><span class="op">()</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -424,8 +430,8 @@ You have created a complete <em>plan</em>. But have you started the car? Burned 
 +-----+----------+-----------+</code></pre>
 </section>
 </section>
-<section id="practical-tips-for-beginners" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="practical-tips-for-beginners"><span class="header-section-number">8.5</span> Practical Tips for Beginners</h2>
+<section id="practical-tips-for-beginners" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="practical-tips-for-beginners"><span class="header-section-number">9.5</span> Practical Tips for Beginners</h2>
 <ul>
 <li><p><strong>Tip 1: In Databricks, Prefer <code>display()</code></strong> While <code>df.show()</code> is standard Spark, Databricks provides a more powerful command: <code>display(df)</code>. It renders the results in a rich, interactive table that you can sort and even plot directly. Use it whenever you’re exploring data.</p></li>
 <li><p><strong>Tip 2: The Danger of <code>.collect()</code></strong> It can be tempting to use <code>df.collect()</code> to bring your data into a regular Scala <code>List</code> to work with it. <strong>BE VERY CAREFUL.</strong> The <code>.collect()</code> action pulls the <em>entire</em> dataset from all the distributed workers back to the memory of the single driver node. If your dataset has 10 billion rows, you will instantly crash your program. Use <code>.collect()</code> only on tiny, filtered datasets for debugging, or use safer actions like <code>.take(n)</code> to inspect a few rows.</p></li>
@@ -839,12 +845,12 @@ You have created a complete <em>plan</em>. But have you started the car? Burned 
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./polymorphism.html" class="pagination-link" aria-label="Many Forms, One Action: The Magic of Polymorphism">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./project.html" class="pagination-link" aria-label="Final Project: A Data Analyst's First Day">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

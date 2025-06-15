@@ -9,6 +9,7 @@ book:
   
   chapters:
     - index.qmd
+    - introdatabricks.qmd
     - introgit.qmd
     - introprogramming.qmd
     - classes.qmd

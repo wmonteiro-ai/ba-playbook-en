@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>5&nbsp; When Things Go Wrong: Handling Errors the Scala Way – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
+<title>6&nbsp; When Things Go Wrong: Handling Errors the Scala Way – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -117,7 +117,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./errorhandling.html"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./errorhandling.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -145,79 +145,85 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Your Lab: A Guided Tour of Databricks Notebooks</span></a>
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./introdatabricks.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introgit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introprogramming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./classes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./encapsulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./errorhandling.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./traits.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Families of Concepts: Inheritance with <code>traits</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Families of Concepts: Inheritance with <code>traits</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./polymorphism.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8: Many Forms, One Action: The Magic of Polymorphism</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./spark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pocketguide.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./recommendations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
   </div>
 </li>
     </ul>
@@ -230,14 +236,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#the-billion-dollar-mistake-the-landmine-of-null" id="toc-the-billion-dollar-mistake-the-landmine-of-null" class="nav-link active" data-scroll-target="#the-billion-dollar-mistake-the-landmine-of-null"><span class="header-section-number">5.1</span> The “Billion-Dollar Mistake”: The Landmine of <code>null</code></a></li>
-  <li><a href="#the-scala-solution-part-1-representing-absence-with-option" id="toc-the-scala-solution-part-1-representing-absence-with-option" class="nav-link" data-scroll-target="#the-scala-solution-part-1-representing-absence-with-option"><span class="header-section-number">5.2</span> The Scala Solution Part 1: Representing Absence with <code>Option</code></a>
+  <li><a href="#the-billion-dollar-mistake-the-landmine-of-null" id="toc-the-billion-dollar-mistake-the-landmine-of-null" class="nav-link active" data-scroll-target="#the-billion-dollar-mistake-the-landmine-of-null"><span class="header-section-number">6.1</span> The “Billion-Dollar Mistake”: The Landmine of <code>null</code></a></li>
+  <li><a href="#the-scala-solution-part-1-representing-absence-with-option" id="toc-the-scala-solution-part-1-representing-absence-with-option" class="nav-link" data-scroll-target="#the-scala-solution-part-1-representing-absence-with-option"><span class="header-section-number">6.2</span> The Scala Solution Part 1: Representing Absence with <code>Option</code></a>
   <ul class="collapse">
-  <li><a href="#the-toolkit-safely-working-with-option" id="toc-the-toolkit-safely-working-with-option" class="nav-link" data-scroll-target="#the-toolkit-safely-working-with-option"><span class="header-section-number">5.2.1</span> The Toolkit: Safely Working with <code>Option</code></a></li>
+  <li><a href="#the-toolkit-safely-working-with-option" id="toc-the-toolkit-safely-working-with-option" class="nav-link" data-scroll-target="#the-toolkit-safely-working-with-option"><span class="header-section-number">6.2.1</span> The Toolkit: Safely Working with <code>Option</code></a></li>
   </ul></li>
-  <li><a href="#the-scala-solution-part-2-handling-failure-with-either" id="toc-the-scala-solution-part-2-handling-failure-with-either" class="nav-link" data-scroll-target="#the-scala-solution-part-2-handling-failure-with-either"><span class="header-section-number">5.3</span> The Scala Solution Part 2: Handling Failure with <code>Either</code></a></li>
-  <li><a href="#the-last-resort-handling-catastrophes-with-trycatch" id="toc-the-last-resort-handling-catastrophes-with-trycatch" class="nav-link" data-scroll-target="#the-last-resort-handling-catastrophes-with-trycatch"><span class="header-section-number">5.4</span> The Last Resort: Handling Catastrophes with <code>try/catch</code></a></li>
-  <li><a href="#choosing-your-error-handling-strategy-a-guide" id="toc-choosing-your-error-handling-strategy-a-guide" class="nav-link" data-scroll-target="#choosing-your-error-handling-strategy-a-guide"><span class="header-section-number">5.5</span> Choosing Your Error Handling Strategy: A Guide</a></li>
+  <li><a href="#the-scala-solution-part-2-handling-failure-with-either" id="toc-the-scala-solution-part-2-handling-failure-with-either" class="nav-link" data-scroll-target="#the-scala-solution-part-2-handling-failure-with-either"><span class="header-section-number">6.3</span> The Scala Solution Part 2: Handling Failure with <code>Either</code></a></li>
+  <li><a href="#the-last-resort-handling-catastrophes-with-trycatch" id="toc-the-last-resort-handling-catastrophes-with-trycatch" class="nav-link" data-scroll-target="#the-last-resort-handling-catastrophes-with-trycatch"><span class="header-section-number">6.4</span> The Last Resort: Handling Catastrophes with <code>try/catch</code></a></li>
+  <li><a href="#choosing-your-error-handling-strategy-a-guide" id="toc-choosing-your-error-handling-strategy-a-guide" class="nav-link" data-scroll-target="#choosing-your-error-handling-strategy-a-guide"><span class="header-section-number">6.5</span> Choosing Your Error Handling Strategy: A Guide</a></li>
   </ul>
 </nav>
     </div>
@@ -246,7 +252,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></h1>
+<h1 class="title"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></h1>
 </div>
 
 
@@ -266,8 +272,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>So far, our code has lived in a “happy path” world, where every operation succeeds and all data is perfectly formed. But reality is messy. Network connections fail, files are missing, user input is invalid, services time out.</p>
 <p><strong>Professional software engineering is largely the art of gracefully handling the “unhappy paths.”</strong> A program that only works when everything is perfect is brittle and untrustworthy. A robust program anticipates failure and handles it with intention and clarity.</p>
 <p>This chapter is your guide to moving error handling from an afterthought to a core part of your design process. In Scala, we don’t just fix errors; we model them as part of our system.</p>
-<section id="the-billion-dollar-mistake-the-landmine-of-null" class="level2" data-number="5.1">
-<h2 data-number="5.1" class="anchored" data-anchor-id="the-billion-dollar-mistake-the-landmine-of-null"><span class="header-section-number">5.1</span> The “Billion-Dollar Mistake”: The Landmine of <code>null</code></h2>
+<section id="the-billion-dollar-mistake-the-landmine-of-null" class="level2" data-number="6.1">
+<h2 data-number="6.1" class="anchored" data-anchor-id="the-billion-dollar-mistake-the-landmine-of-null"><span class="header-section-number">6.1</span> The “Billion-Dollar Mistake”: The Landmine of <code>null</code></h2>
 <p>In many older languages, the absence of a value is represented by <code>null</code>. Its inventor, Tony Hoare, has famously called it his “billion-dollar mistake” due to the countless bugs, security vulnerabilities, and system crashes it has caused over the decades.</p>
 <ul>
 <li><strong>Analogy: The Hidden Landmine</strong> A <code>null</code> is a landmine because the type system gives you no warning it might be there. A function that promises to return a <code>User</code> (<code>def findUser(...): User</code>) can secretly return a <code>null</code> instead. The contract is broken. Later, when your code confidently tries to use the <code>User</code> object (e.g., <code>user.name</code>), it steps on the <code>null</code> landmine, and your entire program explodes with the infamous <code>NullPointerException</code>.</li>
@@ -283,8 +289,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> user <span class="op">=</span> <span class="fu">findUser</span><span class="op">(</span><span class="dv">2</span><span class="op">)</span> <span class="co">// We receive the 'null' landmine.</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">// println(user.name) // BOOM! NullPointerException. The program crashes.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
-<section id="the-scala-solution-part-1-representing-absence-with-option" class="level2" data-number="5.2">
-<h2 data-number="5.2" class="anchored" data-anchor-id="the-scala-solution-part-1-representing-absence-with-option"><span class="header-section-number">5.2</span> The Scala Solution Part 1: Representing Absence with <code>Option</code></h2>
+<section id="the-scala-solution-part-1-representing-absence-with-option" class="level2" data-number="6.2">
+<h2 data-number="6.2" class="anchored" data-anchor-id="the-scala-solution-part-1-representing-absence-with-option"><span class="header-section-number">6.2</span> The Scala Solution Part 1: Representing Absence with <code>Option</code></h2>
 <p>Scala’s solution is to make the possibility of absence <strong>explicit and honest</strong>, directly in the type system. For this, we use the <code>Option</code> type.</p>
 <ul>
 <li><strong>Analogy: The Transparent Box</strong> An <code>Option</code> is like a transparent, sealed box. You can always see what’s inside. It either contains <strong><code>Some(value)</code></strong> (there is something in the box) or it is <strong><code>None</code></strong> (the box is visibly empty). There are no surprises. A function that returns an <code>Option[User]</code> is making an honest promise: “I will give you a box that <em>might</em> contain a <code>User</code>.” The compiler now knows this and will force you to safely check what’s inside the box before you can use it.</li>
@@ -293,8 +299,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> <span class="fu">findUserSafe</span><span class="op">(</span>id<span class="op">:</span> <span class="bu">Int</span><span class="op">):</span> <span class="ex">Option</span><span class="op">[</span>User<span class="op">]</span> <span class="op">=</span> <span class="op">{</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> <span class="op">(</span>id <span class="op">==</span> <span class="dv">1</span><span class="op">)</span> <span class="bu">Some</span><span class="op">(</span><span class="kw">new</span> <span class="fu">User</span><span class="op">(</span><span class="st">"Alice"</span><span class="op">))</span> <span class="cf">else</span> <span class="bu">None</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<section id="the-toolkit-safely-working-with-option" class="level3" data-number="5.2.1">
-<h3 data-number="5.2.1" class="anchored" data-anchor-id="the-toolkit-safely-working-with-option"><span class="header-section-number">5.2.1</span> The Toolkit: Safely Working with <code>Option</code></h3>
+<section id="the-toolkit-safely-working-with-option" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="the-toolkit-safely-working-with-option"><span class="header-section-number">6.2.1</span> The Toolkit: Safely Working with <code>Option</code></h3>
 <p>Because <code>findUserSafe</code> returns an <code>Option</code>, you are forced to handle both the <code>Some</code> and <code>None</code> cases. Here are the primary ways to do it.</p>
 <p><strong>1. The Simplest Way: Providing a Default with <code>.getOrElse()</code></strong> This is perfect when you have a sensible default value if the result is missing.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">val</span> userOption <span class="op">=</span> <span class="fu">findUserSafe</span><span class="op">(</span><span class="dv">2</span><span class="op">)</span></span>
@@ -315,8 +321,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span>message<span class="op">)</span> <span class="co">// "No user found for ID 2."</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </section>
 </section>
-<section id="the-scala-solution-part-2-handling-failure-with-either" class="level2" data-number="5.3">
-<h2 data-number="5.3" class="anchored" data-anchor-id="the-scala-solution-part-2-handling-failure-with-either"><span class="header-section-number">5.3</span> The Scala Solution Part 2: Handling Failure with <code>Either</code></h2>
+<section id="the-scala-solution-part-2-handling-failure-with-either" class="level2" data-number="6.3">
+<h2 data-number="6.3" class="anchored" data-anchor-id="the-scala-solution-part-2-handling-failure-with-either"><span class="header-section-number">6.3</span> The Scala Solution Part 2: Handling Failure with <code>Either</code></h2>
 <p>What happens when <code>None</code> isn’t enough? What if an operation can fail for multiple reasons, and you need to know <em>why</em>? Did we fail to find the user because the ID was invalid, or because the database was down? <code>Option</code> can’t tell us the difference.</p>
 <p>For this, Scala gives us an even more powerful tool: <code>Either[L, R]</code>.</p>
 <ul>
@@ -341,8 +347,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="co">// Output: Failure: Invalid ID: Must be a positive number.</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><code>Either</code> is incredibly powerful because it lets you pass rich error information back to the caller, allowing for more intelligent error handling.</p>
 </section>
-<section id="the-last-resort-handling-catastrophes-with-trycatch" class="level2" data-number="5.4">
-<h2 data-number="5.4" class="anchored" data-anchor-id="the-last-resort-handling-catastrophes-with-trycatch"><span class="header-section-number">5.4</span> The Last Resort: Handling Catastrophes with <code>try/catch</code></h2>
+<section id="the-last-resort-handling-catastrophes-with-trycatch" class="level2" data-number="6.4">
+<h2 data-number="6.4" class="anchored" data-anchor-id="the-last-resort-handling-catastrophes-with-trycatch"><span class="header-section-number">6.4</span> The Last Resort: Handling Catastrophes with <code>try/catch</code></h2>
 <p>So where do traditional <code>try/catch</code> blocks fit in? In modern Scala, they are used for true, unexpected system failures—things that are outside the control of your program’s business logic.</p>
 <ul>
 <li><strong>Analogy: The Fire Alarm</strong> <code>Option</code> and <code>Either</code> are for predictable, everyday problems (a user not found). An <strong>Exception</strong> handled by <code>try/catch</code> is a fire alarm. It’s for catastrophes: the building is on fire (<code>OutOfMemoryError</code>), an earthquake has severed the network cable (<code>IOException</code>), a meteor has hit the data center. It’s not part of the normal flow; it’s an emergency that halts everything.</li>
@@ -366,8 +372,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p><strong>Tip:</strong> Scala’s <code>scala.util.Try</code> is a convenient type that is very similar to <code>Either</code>. It’s specifically designed to wrap a computation that might throw an exception. A <code>Success(value)</code> is like a <code>Right</code>, and a <code>Failure(exception)</code> is like a <code>Left</code>. It’s another excellent tool for your error-handling toolkit.</p>
 </blockquote>
 </section>
-<section id="choosing-your-error-handling-strategy-a-guide" class="level2" data-number="5.5">
-<h2 data-number="5.5" class="anchored" data-anchor-id="choosing-your-error-handling-strategy-a-guide"><span class="header-section-number">5.5</span> Choosing Your Error Handling Strategy: A Guide</h2>
+<section id="choosing-your-error-handling-strategy-a-guide" class="level2" data-number="6.5">
+<h2 data-number="6.5" class="anchored" data-anchor-id="choosing-your-error-handling-strategy-a-guide"><span class="header-section-number">6.5</span> Choosing Your Error Handling Strategy: A Guide</h2>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 25%">
@@ -812,12 +818,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./encapsulation.html" class="pagination-link" aria-label="Encapsulation: Creating Secure Black Boxes">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./traits.html" class="pagination-link" aria-label="Families of Concepts: Inheritance with `traits`">
-        <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Families of Concepts: Inheritance with <code>traits</code></span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="./traits.html" class="pagination-link" aria-label="Chapter 7: Families of Concepts: Inheritance with `traits`">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Families of Concepts: Inheritance with <code>traits</code></span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
