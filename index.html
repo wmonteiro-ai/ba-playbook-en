@@ -6,8 +6,10 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Wellington R Monteiro">
+<meta name="dcterms.date" content="2025-06-14">
 
-<title>1&nbsp; Your Lab: A Guided Tour of Databricks Notebooks – The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch</title>
+<title>The Business Analyst’s Playbook: Mastering Scala, Git, and Spark from Scratch</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -66,7 +68,6 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
 <link href="./introgit.html" rel="next">
-<link href="./index.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
@@ -117,7 +118,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./introdatabricks.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></a></li></ol></nav>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./index.html">Your Lab: A Guided Tour of Databricks Notebooks</a></li></ol></nav>
         <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
         </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -144,86 +145,80 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Preface</span></a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./introdatabricks.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></span></a>
+  <a href="./index.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">Your Lab: A Guided Tour of Databricks Notebooks</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introgit.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./introprogramming.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Grammar of Programming: Variables, Functions, and Logic</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./classes.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">From Business Process to Class: A New Way of Thinking</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./encapsulation.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Encapsulation: Creating Secure Black Boxes</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./errorhandling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">When Things Go Wrong: Handling Errors the Scala Way</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./traits.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Chapter 7: Families of Concepts: Inheritance with <code>traits</code></span></span></a>
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Families of Concepts: Inheritance with <code>traits</code></span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./polymorphism.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Chapter 8: Many Forms, One Action: The Magic of Polymorphism</span></span></a>
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Many Forms, One Action: The Magic of Polymorphism</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./spark.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Meet Your Analysis Engine: Apache Spark</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./project.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
+ <span class="menu-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Final Project: A Data Analyst’s First Day</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./pocketguide.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
+ <span class="menu-text"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">A Pocket Guide to Clean Code in Scala</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./cheatsheet.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
+ <span class="menu-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">A Scala &amp; Spark Cheat Sheet</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./recommendations.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">13</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
+ <span class="menu-text"><span class="chapter-number">12</span>&nbsp; <span class="chapter-title">Where to Go From Here? Your Compass for Lifelong Learning</span></span></a>
   </div>
 </li>
     </ul>
@@ -236,7 +231,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-databricks-your-all-in-one-digital-studio" id="toc-what-is-databricks-your-all-in-one-digital-studio" class="nav-link active" data-scroll-target="#what-is-databricks-your-all-in-one-digital-studio"><span class="header-section-number">1.1</span> What is Databricks? Your All-in-One Digital Studio</a></li>
+  <li><a href="#your-lab-a-guided-tour-of-databricks-notebooks" id="toc-your-lab-a-guided-tour-of-databricks-notebooks" class="nav-link active" data-scroll-target="#your-lab-a-guided-tour-of-databricks-notebooks"><span class="header-section-number">1</span> Your Lab: A Guided Tour of Databricks Notebooks</a>
+  <ul class="collapse">
+  <li><a href="#what-is-databricks-your-all-in-one-digital-studio" id="toc-what-is-databricks-your-all-in-one-digital-studio" class="nav-link" data-scroll-target="#what-is-databricks-your-all-in-one-digital-studio"><span class="header-section-number">1.1</span> What is Databricks? Your All-in-One Digital Studio</a></li>
   <li><a href="#the-notebook-your-interactive-lab-journal" id="toc-the-notebook-your-interactive-lab-journal" class="nav-link" data-scroll-target="#the-notebook-your-interactive-lab-journal"><span class="header-section-number">1.2</span> The Notebook: Your Interactive Lab Journal</a></li>
   <li><a href="#hands-on-a-richer-first-interaction" id="toc-hands-on-a-richer-first-interaction" class="nav-link" data-scroll-target="#hands-on-a-richer-first-interaction"><span class="header-section-number">1.3</span> Hands-On: A Richer First Interaction</a>
   <ul class="collapse">
@@ -248,6 +245,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#the-golden-rules-of-working-with-notebooks" id="toc-the-golden-rules-of-working-with-notebooks" class="nav-link" data-scroll-target="#the-golden-rules-of-working-with-notebooks"><span class="header-section-number">1.4</span> The Golden Rules of Working with Notebooks</a></li>
   <li><a href="#summary-your-journey-starts-now" id="toc-summary-your-journey-starts-now" class="nav-link" data-scroll-target="#summary-your-journey-starts-now"><span class="header-section-number">1.5</span> Summary: Your Journey Starts Now</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
@@ -256,14 +254,26 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Your Lab: A Guided Tour of Databricks Notebooks</span></h1>
+<h1 class="title">The Business Analyst’s Playbook: Mastering Scala, Git, and Spark from Scratch</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Wellington R Monteiro </p>
+          </div>
+  </div>
     
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">June 14, 2025</p>
+    </div>
+  </div>
   
     
   </div>
@@ -273,6 +283,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </header>
 
 
+<section id="your-lab-a-guided-tour-of-databricks-notebooks" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Your Lab: A Guided Tour of Databricks Notebooks</h1>
 <p>Hello there! Welcome to the very beginning of your journey into the world of data and code. I know that starting in a new field can feel like arriving in a new country. There are unfamiliar words, strange tools, and a nagging sense of not knowing where to even begin.</p>
 <p>Think of me as your personal guide and translator. My goal in this first chapter is not to teach you code, but to give you a guided tour of your new digital home. Before an artist can paint, they must get to know their studio. Before a chef can cook, they must understand their kitchen. We will start by getting to know our workshop: <strong>Databricks</strong>.</p>
 <section id="what-is-databricks-your-all-in-one-digital-studio" class="level2" data-number="1.1">
@@ -388,6 +400,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Take a moment to feel proud of this accomplishment. You are now set up and ready to learn how to save and share your work. In the next chapter, we’ll cover two essential tools for collaboration and version control: Git and GitHub.</p>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -792,13 +805,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./index.html" class="pagination-link" aria-label="Preface">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
-      </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./introgit.html" class="pagination-link" aria-label="The Language of Teamwork: Mastering Git &amp; GitHub">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">The Language of Teamwork: Mastering Git &amp; GitHub</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
