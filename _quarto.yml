@@ -6,6 +6,7 @@ book:
   title: "The Business Analyst's Playbook: Mastering Scala, Git, and Spark from Scratch"
   author: "Wellington R Monteiro"
   date: "2025-06-14"
+  google-analytics: "G-1X4L3SGHPF"
   
   chapters:
     - index.qmd
@@ -23,6 +24,9 @@ book:
     - recommendations.qmd
 
 bibliography: references.bib
+
+website:
+  google-analytics: "G-1X4L3SGHPF"
 
 format:
   html:

@@ -292,11 +292,11 @@
   {
     "objectID": "traits.html",
     "href": "traits.html",
-    "title": "7  Chapter 7: Families of Concepts: Inheritance with traits",
+    "title": "7  Families of Concepts: Inheritance with traits",
     "section": "",
     "text": "7.1 What is a trait? More Than Just a Contract\nAs you build more complex software, you’ll start to notice patterns. Imagine you’re creating a system to manage company files. You might start by building a WordDocument class, a Spreadsheet class, and a PdfDocument class. Soon, you’ll realize they all need a print() method, they all have a fileSize, and they all need to be opened().\nAre you going to copy and paste the fileSize logic and the print() method into all three classes? The moment you do, you create a maintenance nightmare. If you need to update the printing logic, you’ll have to find and change it in three different places. This violates a core principle we’ve learned: Don’t Repeat Yourself (DRY).\nThere has to be a better way—and there is. It’s called inheritance.\nInheritance is the mechanism for creating “IS-A” relationships between classes. A PdfDocument IS A type of Document. A Car IS A type of Vehicle. This allows us to define common behaviors and attributes in one central place, promoting code reuse and creating logical, understandable families of classes.\nIn modern Scala, the primary tool for this is the trait.\nWe’ve briefly described a trait as a contract. Let’s create a richer analogy.\nA trait can provide two kinds of members to a class:",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Chapter 7: Families of Concepts: Inheritance with `traits`</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Families of Concepts: Inheritance with `traits`</span>"
     ]
   },
   {
@@ -692,31 +692,31 @@
   {
     "objectID": "traits.html#what-is-a-trait-more-than-just-a-contract",
     "href": "traits.html#what-is-a-trait-more-than-just-a-contract",
-    "title": "7  Chapter 7: Families of Concepts: Inheritance with traits",
+    "title": "7  Families of Concepts: Inheritance with traits",
     "section": "",
     "text": "Analogy: Roles and Abilities Think of a person. A person can have multiple roles or abilities. Someone can be an Employee, a Parent, and a Musician.\n\nThe Employee role comes with abilities like attendMeeting() and submitReport().\nThe Parent role comes with abilities like prepareLunch().\nThe Musician role comes with abilities like playInstrument().\n\nA trait in Scala is like one of these roles. It’s a bundle of behaviors and characteristics that a class can “mix in” to gain new abilities. Crucially, a class can mix in multiple traits, just as a person can have many roles.\n\n\n\nAbstract Members (The “What”): These are contractual obligations. The trait defines what must be done, but not how. It’s a method or value that the class must implement itself. This is the contract part of the analogy.\nConcrete Members (The “How”): These are default, implemented methods and values. The trait provides common, shared behavior that a class gets for free, just by extending the trait. This is the code reuse part.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Chapter 7: Families of Concepts: Inheritance with `traits`</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Families of Concepts: Inheritance with `traits`</span>"
     ]
   },
   {
     "objectID": "traits.html#hands-on-modeling-a-family-of-documents",
     "href": "traits.html#hands-on-modeling-a-family-of-documents",
-    "title": "7  Chapter 7: Families of Concepts: Inheritance with traits",
+    "title": "7  Families of Concepts: Inheritance with traits",
     "section": "7.2 Hands-On: Modeling a Family of Documents",
     "text": "7.2 Hands-On: Modeling a Family of Documents\nLet’s build a rich example that shows both of these powers in action. We will model a file system.\n\n7.2.1 Step 1: The Core Blueprint — The Document trait\nFirst, we’ll define the essential characteristics that all documents in our system must have.\n// This trait defines the core concept of a \"Document\".\ntrait Document {\n  // 1. An ABSTRACT value. Any class extending Document MUST define this.\n  val filename: String\n\n  // 2. An ABSTRACT method. The class must provide its own way to open.\n  def open(): Unit\n\n  // 3. A CONCRETE method. Any class extending Document gets this for FREE.\n  // Notice how it can use the abstract 'filename' value, even though it's\n  // not defined here. It trusts that the implementing class will provide it.\n  def save(): Unit = {\n    println(s\"Saving document: $filename...\")\n    // In a real system, file-saving logic would go here.\n  }\n}\nThis trait is a beautiful mix. It forces implementing classes to define their own filename and open behavior, while giving them a shared, pre-built save method.\n\n\n7.2.2 Step 2: Implementing the Concrete Classes\nNow, let’s create two different types of documents that fulfill the Document contract.\n// A PdfDocument IS A Document.\nclass PdfDocument(val filename: String) extends Document {\n\n  // We MUST implement the abstract 'open' method.\n  override def open(): Unit = {\n    println(s\"Opening PDF file '$filename' in a PDF reader.\")\n  }\n}\n\n// A WordDocument IS A Document.\nclass WordDocument(val filename: String) extends Document {\n  \n  // It has its OWN, different implementation of 'open'.\n  override def open(): Unit = {\n    println(s\"Opening Word file '$filename' in Microsoft Word.\")\n  }\n}\nLet’s test them out:\nval myResume = new PdfDocument(\"resume_final.pdf\")\nval myReport = new WordDocument(\"q3_sales_report.docx\")\n\nmyResume.open()      // Calls the PDF-specific open method\nmyReport.open()      // Calls the Word-specific open method\n\nmyResume.save()      // Calls the SHARED save method from the Document trait\nmyReport.save()      // Also calls the SHARED save method\n\n\n7.2.3 Step 3: Adding More Abilities with Mixins\nWhat if only some documents are printable? We can define that ability in its own separate trait.\n// This trait defines the ROLE or ABILITY of being printable.\ntrait Printable {\n  // This is a concrete method. Any class that is Printable gets it.\n  def print(): Unit = {\n    println(\"Sending to the default printer...\")\n  }\n}\nNow, we can “mix in” this Printable ability to the classes that need it using the with keyword.\n// A PDF is a Document AND it is Printable.\nclass PdfDocument(val filename: String) extends Document with Printable {\n  override def open(): Unit = {\n    println(s\"Opening PDF file '$filename' in a PDF reader.\")\n  }\n}\n\n// A Word Document is also a Document AND Printable.\nclass WordDocument(val filename: String) extends Document with Printable {\n  override def open(): Unit = {\n    println(s\"Opening Word file '$filename' in Microsoft Word.\")\n  }\n}\n\n// A Video File IS A Document, but it is NOT Printable.\nclass VideoFile(val filename: String) extends Document {\n  override def open(): Unit = {\n    println(s\"Playing video file '$filename' in a media player.\")\n  }\n}\nNow, our PdfDocument and WordDocument have gained a new print() method, while VideoFile has not. This is the power of mixing in roles.\nval finalContract = new PdfDocument(\"signed_contract.pdf\")\nval movieClip = new VideoFile(\"launch_video.mp4\")\n\nfinalContract.print() // This works!\n// movieClip.print()  // ERROR! This line would not compile. A VideoFile is not Printable.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Chapter 7: Families of Concepts: Inheritance with `traits`</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Families of Concepts: Inheritance with `traits`</span>"
     ]
   },
   {
     "objectID": "traits.html#context-and-best-practices",
     "href": "traits.html#context-and-best-practices",
-    "title": "7  Chapter 7: Families of Concepts: Inheritance with traits",
+    "title": "7  Families of Concepts: Inheritance with traits",
     "section": "7.3 Context and Best Practices",
     "text": "7.3 Context and Best Practices\n\nTip 1: Use traits for Behaviors and Roles Think of traits as adjectives or abilities. Good names for traits are often nouns ending in “-able” or “-er” (e.g., Printable, Clickable, Serializable, Logger). You use them to add capabilities to a class. Classes, in contrast, represent concrete things or nouns (Customer, Invoice).\nTip 2: Why traits are often better than abstract class You might see another keyword in older Scala code or other languages: abstract class. It’s similar to a trait, but with one major limitation: a class can only extend one other class. However, a class can extend many traits (e.g., ... extends Document with Printable with Serializable). This makes traits far more flexible for composing behaviors, like snapping together building blocks of functionality.\nTip 3: Designing to an Interface When you use a trait, you are practicing a powerful design principle called “coding to an interface.” You are defining a general contract (Document) that other parts of your system can rely on, without needing to know the specific details of the concrete classes (PdfDocument, WordDocument). This “decoupling” makes your code much easier to change and extend later on.\n\nWe have now successfully created a “family” of related but distinct classes. They are all Documents and share a common contract, but they can also have their own unique abilities. This sets the stage perfectly for the next chapter, where we will learn how to leverage this family structure to write incredibly flexible and powerful code.",
     "crumbs": [
-      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Chapter 7: Families of Concepts: Inheritance with `traits`</span>"
+      "<span class='chapter-number'>7</span>  <span class='chapter-title'>Families of Concepts: Inheritance with `traits`</span>"
     ]
   },
   {
