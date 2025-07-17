@@ -20,6 +20,7 @@ book:
     - spark.qmd
     - project.qmd
     - pocketguide.qmd
+    - oopcookbook.qmd
     - cheatsheet.qmd
     - recommendations.qmd
 
