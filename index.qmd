@@ -176,7 +176,7 @@ Your notebook is a sequence of **cells**. Each cell is a separate block for eith
 In the first cell, which is a code cell by default, let's write our first instruction:
 
 ```scala
-println("Hello, Databricks\! The journey begins.")
+println("Hello, Databricks! The journey begins.")
 ```
 
 Click the "Play" icon (▶️) or press **Shift \+ Enter**. You should see the text output appear directly below the cell. You've just successfully communicated with the cluster's driver node\!
@@ -190,26 +190,26 @@ Now, let's add some narrative.
 
 ```markdown
 %md 
-\# My First Data Story
+# My First Data Story
 
 This notebook will be my workspace for learning Scala and Spark.
 
-\#\# Initial Hypothesis  
+## Initial Hypothesis  
 My initial hypothesis is that learning to code will be a challenging but rewarding process.
 
-\#\#\# Key Learning Areas  
-\* Basic Scala syntax  
-\* Object-Oriented principles  
-\* **\*\*Data analysis\*\*** with *\_Spark\_*
+### Key Learning Areas  
+* Basic Scala syntax  
+* Object-Oriented principles  
+* ****Data analysis**** with *_Spark_*
 
 Here is a quick reference for Markdown:  
-\- \`\# H1\`, \`\#\# H2\`, \`\#\#\# H3\`: Headings  
-\- \`\*\*bold\*\*\` or \`\_\_bold\_\_\`: Bold text  
-\- \`\*italic\*\` or \`\_italic\_\`: Italic text  
-\- \`\> Blockquote\`: To quote text  
-\- \`- Unordered List Item\`: For bullet points  
-\- \`1. Ordered List Item\`: For numbered lists  
-\- \`(https://www.databricks.com)\`: To create a hyperlink
+- `# H1`, `## H2`, `### H3`: Headings  
+- `**bold**` or `__bold__`: Bold text  
+- `*italic*` or `_italic_`: Italic text  
+- `> Blockquote`: To quote text  
+- `- Unordered List Item`: For bullet points  
+- `1. Ordered List Item`: For numbered lists  
+- `(https://www.databricks.com)`: To create a hyperlink
 ```
 
 The %md at the top is a "magic command" that turns the cell from a code cell into a **Markdown** cell. Markdown is a simple language for creating richly formatted text. Run this cell (Shift \+ Enter) to see it transform into a beautiful document.
@@ -220,7 +220,7 @@ Let's demonstrate the multi-language power. Create a new cell and enter the foll
 
 ```sql
 %sql  
-SELECT \* FROM samples.nyctaxi.trips LIMIT 10;
+SELECT * FROM samples.nyctaxi.trips LIMIT 10;
 ```
 
 Run this cell. You'll see a formatted table appear as the output. Notice how easily you can switch from Scala to Markdown to SQL, all within the same interactive environment.

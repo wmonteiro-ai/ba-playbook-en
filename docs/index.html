@@ -549,7 +549,7 @@ A scientist doesn’t just run experiments; they meticulously document them in a
 <section id="step-4-writing-and-running-your-first-code" class="level3" data-number="1.5.4">
 <h3 data-number="1.5.4" class="anchored" data-anchor-id="step-4-writing-and-running-your-first-code"><span class="header-section-number">1.5.4</span> Step 4: Writing and Running Your First Code</h3>
 <p>In the first cell, which is a code cell by default, let’s write our first instruction:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="st">"Hello, Databricks</span><span class="er">\!</span><span class="st"> The journey begins."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode scala code-with-copy"><code class="sourceCode scala"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">println</span><span class="op">(</span><span class="st">"Hello, Databricks! The journey begins."</span><span class="op">)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Click the “Play” icon (▶️) or press <strong>Shift + Enter</strong>. You should see the text output appear directly below the cell. You’ve just successfully communicated with the cluster’s driver node!</p>
 </section>
 <section id="step-5-telling-a-story-with-markdown" class="level3" data-number="1.5.5">
@@ -561,33 +561,33 @@ A scientist doesn’t just run experiments; they meticulously document them in a
 <li>Inside this cell, type the following:</li>
 </ol>
 <div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>%md </span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="sc">\#</span> My First Data Story</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu"># My First Data Story</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>This notebook will be my workspace for learning Scala and Spark.</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="sc">\#\#</span> Initial Hypothesis  </span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">## Initial Hypothesis  </span></span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>My initial hypothesis is that learning to code will be a challenging but rewarding process.</span>
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="sc">\#\#\#</span> Key Learning Areas  </span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="sc">\*</span> Basic Scala syntax  </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="sc">\*</span> Object-Oriented principles  </span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="sc">\*</span> **\*\*Data analysis\*\*** with *\_Spark\_*</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="fu">### Key Learning Areas  </span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Basic Scala syntax  </span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>Object-Oriented principles  </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="ss">* </span>****Data analysis**** with *_Spark_*</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>Here is a quick reference for Markdown:  </span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`\#</span> H1<span class="sc">\`</span>, <span class="sc">\`\#\#</span> H2<span class="sc">\`</span>, <span class="sc">\`\#\#\#</span> H3<span class="sc">\`</span>: Headings  </span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`\*\*</span>bold<span class="sc">\*\*\`</span> or <span class="sc">\`\_\_</span>bold<span class="sc">\_\_\`</span>: Bold text  </span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`\*</span>italic<span class="sc">\*\`</span> or <span class="sc">\`\_</span>italic<span class="sc">\_\`</span>: Italic text  </span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`\&gt;</span> Blockquote<span class="sc">\`</span>: To quote text  </span>
-<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`</span>- Unordered List Item<span class="sc">\`</span>: For bullet points  </span>
-<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`</span>1. Ordered List Item<span class="sc">\`</span>: For numbered lists  </span>
-<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="sc">\-</span> <span class="sc">\`</span>(https://www.databricks.com)<span class="sc">\`</span>: To create a hyperlink</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`# H1`</span>, <span class="in">`## H2`</span>, <span class="in">`### H3`</span>: Headings  </span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`**bold**`</span> or <span class="in">`__bold__`</span>: Bold text  </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`*italic*`</span> or <span class="in">`_italic_`</span>: Italic text  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`&gt; Blockquote`</span>: To quote text  </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`- Unordered List Item`</span>: For bullet points  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`1. Ordered List Item`</span>: For numbered lists  </span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span><span class="in">`(https://www.databricks.com)`</span>: To create a hyperlink</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>The %md at the top is a “magic command” that turns the cell from a code cell into a <strong>Markdown</strong> cell. Markdown is a simple language for creating richly formatted text. Run this cell (Shift + Enter) to see it transform into a beautiful document.</p>
 </section>
 <section id="step-6-running-a-sql-query" class="level3" data-number="1.5.6">
 <h3 data-number="1.5.6" class="anchored" data-anchor-id="step-6-running-a-sql-query"><span class="header-section-number">1.5.6</span> Step 6: Running a SQL Query</h3>
 <p>Let’s demonstrate the multi-language power. Create a new cell and enter the following to query a sample dataset that comes with every Databricks workspace.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>%sql  </span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> \<span class="op">*</span> <span class="kw">FROM</span> samples.nyctaxi.trips <span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span> <span class="op">*</span> <span class="kw">FROM</span> samples.nyctaxi.trips <span class="kw">LIMIT</span> <span class="dv">10</span>;</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>Run this cell. You’ll see a formatted table appear as the output. Notice how easily you can switch from Scala to Markdown to SQL, all within the same interactive environment.</p>
 </section>
 </section>
